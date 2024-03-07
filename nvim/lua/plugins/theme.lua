@@ -41,7 +41,9 @@ return {
       vim.cmd("highlight NvimTreeNormalNC guibg=#00000099")
       -- Additional elements
       vim.cmd("highlight StatusLineNC guibg=#00000050")
-      vim.cmd("highlight VertSplit guibg=#00000050")
+      vim.cmd("highlight VertSplit guibg=NONE")
+      vim.cmd("highlight LineNr guifg=#E0E0E0")
+      vim.cmd("highlight CursorLineNr guifg=#E0E0E0")
     end,
   },
 }
