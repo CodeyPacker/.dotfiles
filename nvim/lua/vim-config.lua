@@ -19,6 +19,14 @@ vim.keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
 vim.keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
 vim.keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
 
-vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
+-- Toggle between two most recent files
+vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {desc = "Toggle between two most recent files"})
+
+-- Toggle Terminal (assuming you're using 'toggleterm.nvim' plugin)
+vim.keymap.set("n", "<Leader>t", ":ToggleTerm<CR>", {desc = "Toggle Terminal"})
+
+-- Run Build Command
+vim.keymap.set("n", "<Leader>bb", ":!yarn develop<CR>", {desc = "Run Build Command"})
+
 vim.wo.number = true
 vim.opt.clipboard = "unnamedplus"
