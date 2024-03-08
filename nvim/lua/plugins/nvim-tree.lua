@@ -40,7 +40,7 @@ return {
       })
 
       -- Key mapping to toggle nvim-tree
-      vim.api.nvim_set_keymap("n", "<Leader>e", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
+      vim.api.nvim_set_keymap("n", "<Leader>b", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
     end,
   },
 }
