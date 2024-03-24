@@ -18,5 +18,12 @@ alias yd="yarn develop"
 alias ycyd="yarn clean && yarn develop"
 alias ycys="yarn clean && yarn serve" 
 
+# Tmux
+alias ta="tmux attach -t"
+alias tnew="tmux new -s"
+alias tls="tmux ls"
+alias tkill="tmux kill-session -t"
+alias tkillall="tmux kill-server"
+
 # Misc
 alias ll="ls -lAh"

@@ -6,6 +6,8 @@ vim.g.mapleader = " "
 
 vim.keymap.set('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = "Save current file" })
 
+vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true, desc = "Exit insert mode" })
+
 -- Navigate vim panes better
 vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
 vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')

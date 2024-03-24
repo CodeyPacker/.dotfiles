@@ -28,7 +28,7 @@ return {
           },
         },
         filters = {
-          dotfiles = true, -- show dotfiles
+          dotfiles = false, -- show dotfiles
         },
         view = {
           width = 30, -- set the view width to 30
