@@ -5,7 +5,7 @@
 1. Clone repo into the home directory
 
     ```
-    cd ~ && git clone https://github.com/bwcroft/dotfiles.git
+    cd ~ && git clone https://github.com/codeypacker/.dotfiles.git
     ```
 3. Navigate to the .dotfiles directory and run the installation file
    
