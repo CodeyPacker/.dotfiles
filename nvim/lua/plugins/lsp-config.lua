@@ -10,6 +10,7 @@ return {
 		config = function()
 			require("mason-lspconfig").setup({
 				ensure_installed = {
+          "eslint",
 					"lua_ls",
 					"tsserver",
 					"jsonls",
@@ -33,9 +34,14 @@ return {
 		"neovim/nvim-lspconfig",
 		config = function()
 			local lspconfig = require("lspconfig")
-
-			lspconfig.lua_ls.setup({})
-			lspconfig.tsserver.setup({})
+      lspconfig.lua_ls.setup({})
+      lspconfig.tsserver.setup({
+        init_options = {
+          preferences = {
+            disableSuggestions = true,
+          },
+        },
+      })
 			lspconfig.jsonls.setup({})
 			lspconfig.html.setup({})
 			lspconfig.cssls.setup({})
@@ -49,6 +55,7 @@ return {
 			lspconfig.dockerls.setup({})
 			lspconfig.docker_compose_language_service.setup({})
 			lspconfig.bashls.setup({})
+			lspconfig.eslint.setup({})
 
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})

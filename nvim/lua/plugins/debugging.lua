@@ -3,6 +3,8 @@ return {
 	dependencies = {
 		"leoluz/nvim-dap-go",
 		"rcarriga/nvim-dap-ui",
+		"tpope/vim-fugitive",
+		"https://github.com/nvim-neotest/nvim-nio",
 	},
 	config = function()
 		require("dapui").setup()

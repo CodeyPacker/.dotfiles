@@ -8,42 +8,60 @@ return {
       require("catppuccin").setup({
         term_colors = true,
         styles = {
-          comments = {},
-          conditionals = {},
+          comments = { "italic" },
+          conditionals = { "italic" },
           loops = {},
           functions = {},
-          keywords = {},
+          keywords = { "bold" },
           strings = {},
           variables = {},
           numbers = {},
           booleans = {},
           properties = {},
-          types = {},
+          types = { "italic" },
         },
         color_overrides = {
           mocha = {
-            base = "#0F0F0F",
-            mantle = "#0F0F0F",
-            crust = "#0F0F0F",
+            base = "#1E1E2E",
+            mantle = "#1A1826",
+            crust = "#161320",
           },
         },
       })
 
       vim.cmd.colorscheme("catppuccin")
-      vim.cmd.colorscheme("catppuccin")
 
-      -- General transparency
-      vim.cmd("highlight Normal guibg=#00000050")
-      vim.cmd("highlight NonText guibg=#00000050")
-      vim.cmd("highlight NormalNC guibg=#00000050")
-      -- File tree transparency
-      vim.cmd("highlight NvimTreeNormal guibg=#00000099")
-      vim.cmd("highlight NvimTreeNormalNC guibg=#00000099")
-      -- Additional elements
-      vim.cmd("highlight StatusLineNC guibg=#00000050")
-      vim.cmd("highlight VertSplit guibg=NONE")
-      vim.cmd("highlight LineNr guifg=#E0E0E0")
-      vim.cmd("highlight CursorLineNr guifg=#E0E0E0")
+      vim.cmd("highlight Normal guibg=#1E1E2E50")
+      vim.cmd("highlight NonText guibg=#1E1E2E50")
+      vim.cmd("highlight NormalNC guibg=#1E1E2E50")
+
+     -- Enable transparency for various elements
+     vim.cmd("highlight Normal guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NonText guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NormalNC guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NvimTreeNormal guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NvimTreeNormalNC guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight StatusLineNC guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NvimTreeVertSplit guibg=NONE ctermbg=NONE guifg=NONE ctermfg=NONE")
+     vim.cmd("highlight NvimTreeWinSeparator guibg=NONE ctermbg=NONE guifg=NONE ctermfg=NONE")
+     vim.cmd("highlight VertSplit guibg=NONE ctermbg=NONE guifg=NONE ctermfg=NONE")
+
+     -- Make Harpoon pop-up window background transparent
+     vim.cmd("highlight HarpoonWindow guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NormalFloat guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight FloatBorder guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight Pmenu guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight PmenuSel guibg=NONE ctermbg=NONE")
+
+     -- Make status lines transparent
+     vim.cmd("highlight StatusLine guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight StatusLineNC guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NvimTreeStatusLine guibg=NONE ctermbg=NONE")
+     vim.cmd("highlight NvimTreeStatusLineNC guibg=NONE ctermbg=NONE")
+
+      -- Make line numbers a darker shade
+      vim.cmd("highlight LineNr guifg=#CCCCCC ctermfg=240")
     end,
   },
 }
+

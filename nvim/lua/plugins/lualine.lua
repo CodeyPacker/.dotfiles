@@ -3,7 +3,10 @@ return {
 	config = function()
 		require("lualine").setup({
 			options = {
-				theme = "dracula",
+				theme = "catppuccin",
+				section_separators = '',
+				component_separators = '',
+				globalstatus = true,
 			},
 		})
 	end,

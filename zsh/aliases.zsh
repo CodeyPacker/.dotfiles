@@ -15,6 +15,7 @@ alias gcopy="git branch --show-current | tr -d '\n' | pbcopy"  # Copy current Gi
 # Yarn aliases
 alias yc="yarn clean"
 alias yd="yarn develop"
+alias yr="yarn refresh"
 alias ycyd="yarn clean && yarn develop"
 alias ycys="yarn clean && yarn serve" 
 

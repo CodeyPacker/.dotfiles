@@ -2,11 +2,21 @@ vim.cmd("set expandtab")
 vim.cmd("set tabstop=2")
 vim.cmd("set softtabstop=2")
 vim.cmd("set shiftwidth=2")
+
+vim.api.nvim_create_autocmd({ "Filetype" }, {
+  pattern = "harpoon",
+  callback = function()
+    vim.opt.cursorline = true
+    vim.api.nvim_set_hl(0, 'HarpoonWindow', { link = 'Normal' })
+    vim.api.nvim_set_hl(0, 'HarpoonBorder', { link = 'Normal' })
+  end
+})
+
 vim.g.mapleader = " "
 
 vim.keymap.set('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = "Save current file" })
-
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true, desc = "Exit insert mode" })
+vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
 
 -- Navigate vim panes better
 vim.keymap.set('n', '<c-k>', ':wincmd k<CR>')
@@ -28,3 +38,4 @@ vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {desc = "Toggle between two most r
 
 vim.wo.number = true
 vim.opt.clipboard = "unnamedplus"
+
