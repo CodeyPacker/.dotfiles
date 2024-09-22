@@ -19,12 +19,7 @@
     4. Change font to MesloLGS NF
     
 ### ZSH
-- ```ZSH``` is configured to use ```iTerm2```, ```Oh-My-Zsh```, and ```Powerlevel10k```. 
-- If you want to change the ```Powerlevel10k``` settings, update the ```.zshrc``` file and then execute the following command in the terminal
-
-    ```
-    p10k configure
-    ```
+- ```ZSH``` is configured to use ```iTerm2```, ```Oh-My-Zsh```, and ```starship``` (to style the prompts). 
 
 ### Neovim
 - ```Neovim``` is automaticly installed and configured with ```lua```. 
