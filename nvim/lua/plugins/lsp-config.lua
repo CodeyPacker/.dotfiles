@@ -20,7 +20,7 @@ return {
           "gopls",
           "marksman",
           "eslint",
-          "ts_ls",
+          -- "ts_ls",
           "graphql",
           "intelephense",
           "pylsp",
@@ -46,13 +46,13 @@ return {
           },
         },
       })
-      lspconfig.ts_ls.setup({
-        init_options = {
-          preferences = {
-            disableSuggestions = true,
-          },
-        },
-      })
+      -- lspconfig.ts_ls.setup({
+      --   init_options = {
+      --     preferences = {
+      --       disableSuggestions = true,
+      --     },
+      --   },
+      -- })
       lspconfig.graphql.setup({})
       lspconfig.eslint.setup({})
       lspconfig.jsonls.setup({})
