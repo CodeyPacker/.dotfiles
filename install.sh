@@ -87,5 +87,10 @@ echo "${GREEN}Init .tmux.conf...${RESET}"
 rm -rf $HOME/.tmux.conf
 ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
+# Setup Starship
+echo "${GREEN}Init .config/starship.toml...${RESET}"
+rm -rf $HOME/.config/starship.toml
+ln -s $DOTFILES/starship/starship.toml $HOME/.config/starship.toml
+
 echo "${GREEN}Done!${RESET}"
 
