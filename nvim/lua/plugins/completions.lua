@@ -1,13 +1,26 @@
 return {
-  {
-    "hrsh7th/cmp-nvim-lsp"
-  },
+  {"hrsh7th/cmp-nvim-lsp"},
   {
     "L3MON4D3/LuaSnip",
     dependencies = {
       "saadparwaiz1/cmp_luasnip",
       "rafamadriz/friendly-snippets",
     },
+    config = function()
+      local ls = require("luasnip")
+      require("luasnip.loaders.from_vscode").lazy_load()
+
+      local snippets = {
+        ls.snippet("log", {
+          ls.text_node("console.log('"),
+          ls.insert_node(1, ""),  
+          ls.text_node("');"),
+        }),
+      }
+
+      ls.add_snippets("javascript", snippets)
+      ls.add_snippets("javascriptreact", snippets)
+    end,
   },
   {
     "hrsh7th/nvim-cmp",

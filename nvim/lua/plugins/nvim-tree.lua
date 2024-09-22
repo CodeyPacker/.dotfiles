@@ -33,6 +33,10 @@ return {
 				git = {
 					ignore = false, -- show files ignored by git
 				},
+				filters = {
+					dotfiles = false, -- Show dotfiles
+					custom = {},
+				},
 			})
 
 			-- Key mapping to toggle nvim-tree

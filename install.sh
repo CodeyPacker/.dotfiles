@@ -82,5 +82,10 @@ else
 fi
 ln -s $DOTFILES/nvim $HOME/.config/nvim
 
+# Setup tmux
+echo "${GREEN}Init .tmux.conf...${RESET}"
+rm -rf $HOME/.tmux.conf
+ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
+
 echo "${GREEN}Done!${RESET}"
 
