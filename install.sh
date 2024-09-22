@@ -30,8 +30,8 @@ echo "${GREEN}Setting Up Your Mac...${RESET}"
 if [ ! -d "$OH_MY_ZSH" ]; then
   echo "${GREEN}Installing Oh-My-Zsh...${RESET}"
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-else 
-  echo "${CYAN}Oh-My-Zsh Already Installed${RESET}" 
+else
+  echo "${CYAN}Oh-My-Zsh Already Installed${RESET}"
 fi
 
 # Install PowerLevel10K if not already installed
@@ -54,7 +54,7 @@ if test ! $(which brew); then
 
   echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
   eval "$(/opt/homebrew/bin/brew shellenv)"
-else 
+else
   echo "${CYAN}Homebrew Already Installed${RESET}"
 fi
 
@@ -77,7 +77,7 @@ brew bundle --file Brewfile
 echo "${GREEN}Init Neovim Config...${RESET}"
 if [ ! -d "$HOME/.config" ]; then
   mkdir "$HOME/.config"
-else 
+else
   rm -rf $HOME/.config/nvim
 fi
 ln -s $DOTFILES/nvim $HOME/.config/nvim
@@ -89,8 +89,8 @@ ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
 # Setup Kitty
 echo "${GREEN}Init kitty/kitty.conf...${RESET}"
-rm -rf $HOME/kitty/kitty.conf
-ln -s $DOTFILES/kitty/kitty.conf $HOME/kitty/kitty.conf
+rm -rf $HOME/.config/kitty/kitty.conf
+ln -s $DOTFILES/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
 
 # Setup Starship
 echo "${GREEN}Init .config/starship.toml...${RESET}"
