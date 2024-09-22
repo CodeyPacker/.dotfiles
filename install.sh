@@ -87,6 +87,11 @@ echo "${GREEN}Init .tmux.conf...${RESET}"
 rm -rf $HOME/.tmux.conf
 ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
 
+# Setup Kitty
+echo "${GREEN}Init kitty/kitty.conf...${RESET}"
+rm -rf $HOME/kitty/kitty.conf
+ln -s $DOTFILES/kitty/kitty.conf $HOME/kitty/kitty.conf
+
 # Setup Starship
 echo "${GREEN}Init .config/starship.toml...${RESET}"
 rm -rf $HOME/.config/starship.toml
