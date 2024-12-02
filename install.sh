@@ -34,19 +34,6 @@ else
   echo "${CYAN}Oh-My-Zsh Already Installed${RESET}"
 fi
 
-# Install PowerLevel10K if not already installed
-if [ ! -d "$POWER_LEVEL_10K" ]; then
-  echo "${GREEN}Installing PowerLevel10K${RESET}"
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$POWER_LEVEL_10K"
-else
-  echo "${CYAN}PowerLevel10K Already installed${RESET}"
-fi
-
-# Setup Powerlevel10k
-echo "${GREEN}Init PowerLevel10K Settings${RESET}"
-rm -rf $HOME/.p10k.zsh
-ln -s $DOTFILES/zsh/.p10k.zsh $HOME/.p10k.zsh
-
 # Install Homebrew if not already installed.
 if test ! $(which brew); then
   echo "${GREEN}Installing Homebrew...${RESET}"
@@ -81,6 +68,18 @@ else
   rm -rf $HOME/.config/nvim
 fi
 ln -s $DOTFILES/nvim $HOME/.config/nvim
+
+# Setup aerospace
+echo "${GREEN}Init Aerospace Config...${RESET}"
+
+if [ ! -d "$HOME/.config" ]; then
+  mkdir "$HOME/.config"
+else
+  rm -rf $HOME/.config/aerospace
+fi
+
+ln -s $DOTFILES/aerospace $HOME/.config/aerospace
+
 
 # Setup tmux
 echo "${GREEN}Init .tmux.conf...${RESET}"

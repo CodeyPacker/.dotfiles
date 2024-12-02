@@ -26,5 +26,11 @@ alias tls="tmux ls"
 alias tkill="tmux kill-session -t"
 alias tkillall="tmux kill-server"
 
+# Lazygit
+alias gg="Lazygit"
+
+# Screaming Frog
+alias sf="/Applications/Screaming\ Frog\ SEO\ Spider.app/Contents/MacOS/ScreamingFrogSEOSpiderLauncher"
+
 # Misc
 alias ll="ls -lAh"

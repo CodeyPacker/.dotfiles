@@ -1,22 +1,20 @@
+---@type LazySpec
 return {
-  "jose-elias-alvarez/null-ls.nvim",
-  config = function()
-    local null_ls = require("null-ls")
+  "nvimtools/none-ls.nvim",
+  opts = function(_, opts)
+    -- opts variable is the default configuration table for the setup function call
+    -- local null_ls = require "null-ls"
 
-    null_ls.setup({
-      sources = {
-        null_ls.builtins.formatting.stylua,
-        null_ls.builtins.formatting.prettier,
-      },
+    -- Check supported formatters and linters
+    -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+    -- https://github.com/nvimtools/none-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+
+    -- Only insert new sources, do not replace the existing ones
+    -- (If you wish to replace, use `opts.sources = {}` instead of the `list_insert_unique` function)
+    opts.sources = require("astrocore").list_insert_unique(opts.sources, {
+      -- Set a formatter
+      -- null_ls.builtins.formatting.stylua,
+      -- null_ls.builtins.formatting.prettier,
     })
-
-    -- Updated keymap for formatting
-    vim.keymap.set("n", "<leader>fm", function()
-      if vim.lsp.buf.format then
-        vim.lsp.buf.format()
-      elseif vim.lsp.buf.formatting then
-        vim.lsp.buf.formatting()
-      end
-    end, { desc = "Format Buffer" })
   end,
 }
