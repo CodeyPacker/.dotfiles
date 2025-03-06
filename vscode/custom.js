@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", function () {
         handleEscape();
       }
     },
-    true
+    true,
   );
 
   function runMyScript() {

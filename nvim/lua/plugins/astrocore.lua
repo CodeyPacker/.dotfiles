@@ -31,9 +31,11 @@ return {
         signcolumn = "yes",
         wrap = false,
         clipboard = "unnamedplus",
+        -- showtabline = 0,
       },
       g = {
         -- configure global vim variables
+        -- winbar = "%f",
       },
     },
     -- Mappings
@@ -42,6 +44,9 @@ return {
       n = {
         -- Toggle Neo-tree
         ["<Leader>a"] = { ":Neotree toggle<CR>", desc = "Toggle Neo-tree" },
+
+        ["<leader>fs"] = { "<cmd>Telescope live_grep<cr>", desc = "Find string in project" },
+        -- Find string
 
         -- Format current file
         ["<Leader>fm"] = {

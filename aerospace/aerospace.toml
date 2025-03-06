@@ -43,7 +43,7 @@ key-mapping.preset = 'qwerty'
 # See https://nikitabobko.github.io/AeroSpace/guide#on-focus-changed-callbacks
 # See https://nikitabobko.github.io/AeroSpace/commands#move-mouse
 on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
-on-focus-changed = "move-mouse window-lazy-center"
+# on-focus-changed = "move-mouse window-lazy-center"
 
 # Gaps between windows (inner-*) and between monitor edges (outer-*).
 # Possible values:
@@ -110,22 +110,22 @@ alt-1 = 'workspace 1'
 alt-2 = 'workspace 2'
 alt-3 = 'workspace 3'
 alt-4 = 'workspace 4'
-alt-b = 'workspace B' # for Browser
+alt-a = 'workspace A' # for Arc
 alt-e = 'workspace E' # for Email
 alt-m = 'workspace M' # for Music
 alt-s = 'workspace S' # for Slack
-alt-t = 'workspace T' # for Terminal
+alt-c = 'workspace C' # for Code
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 alt-shift-1 = 'move-node-to-workspace 1'
 alt-shift-2 = 'move-node-to-workspace 2'
 alt-shift-3 = 'move-node-to-workspace 3'
 alt-shift-4 = 'move-node-to-workspace 4'
-alt-shift-b = 'move-node-to-workspace B' # for Browser
+alt-shift-a = 'move-node-to-workspace A' # for Arc
 alt-shift-e = 'move-node-to-workspace E' # for Email
 alt-shift-m = 'move-node-to-workspace M' # for Music
 alt-shift-s = 'move-node-to-workspace S' # for Slack
-alt-shift-t = 'move-node-to-workspace T' # for Terminal
+alt-shift-c = 'move-node-to-workspace C' # for Code
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'

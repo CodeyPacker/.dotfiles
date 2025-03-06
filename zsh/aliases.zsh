@@ -34,3 +34,6 @@ alias sf="/Applications/Screaming\ Frog\ SEO\ Spider.app/Contents/MacOS/Screamin
 
 # Misc
 alias ll="ls -lAh"
+
+# PNPM
+alias pnd="pnpm run develop"

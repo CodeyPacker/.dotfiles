@@ -11,6 +11,9 @@ return {
         sidebar = "tab", -- or "global"
         current = "window",
       },
+      filtered_items = {
+        hide_dotfiles = false,
+      },
     },
   },
 }
