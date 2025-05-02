@@ -16,6 +16,11 @@ return {
       diagnostics_mode = 3,
       highlighturl = true,
       notifications = true,
+      options = {
+        opt = {
+          showtabline = 0,
+        },
+      },
     },
     -- Diagnostics configuration
     diagnostics = {
