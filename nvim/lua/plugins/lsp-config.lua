@@ -18,15 +18,15 @@ return {
           "cssls",
           "dotls",
           "gopls",
-          "marksman",
+          -- "marksman",
           "eslint",
           -- "ts_ls",
           "graphql",
           "intelephense",
-          "pylsp",
-          "rust_analyzer",
+          -- "pylsp",
+          -- "rust_analyzer",
           "sqlls",
-          "vuels",
+          -- "vuels",
           "dockerls",
           "docker_compose_language_service",
           "bashls",
@@ -60,12 +60,12 @@ return {
       lspconfig.cssls.setup({})
       lspconfig.dotls.setup({})
       lspconfig.gopls.setup({})
-      lspconfig.marksman.setup({})
+      -- lspconfig.marksman.setup({})
       lspconfig.intelephense.setup({})
-      lspconfig.pylsp.setup({})
+      -- lspconfig.pylsp.setup({})
       lspconfig.sqlls.setup({})
-      lspconfig.rust_analyzer.setup({})
-      lspconfig.vuels.setup({})
+      -- lspconfig.rust_analyzer.setup({})
+      -- lspconfig.vuels.setup({})
       lspconfig.dockerls.setup({})
       lspconfig.docker_compose_language_service.setup({})
       lspconfig.bashls.setup({})

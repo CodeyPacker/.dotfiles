@@ -13,8 +13,7 @@ vim.api.nvim_create_autocmd({ "Filetype" }, {
 })
 
 vim.g.mapleader = " "
-
-vim.keymap.set('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = "Save current file" })
+-- vim.keymap.set('n', '<leader>fs', ':w<CR>', { noremap = true, silent = true, desc = "Save current file" })
 vim.keymap.set('i', 'jk', '<Esc>', { noremap = true, silent = true, desc = "Exit insert mode" })
 vim.keymap.set('n', '<leader>h', ':nohlsearch<CR>')
 
@@ -24,18 +23,23 @@ vim.keymap.set('n', '<c-j>', ':wincmd j<CR>')
 vim.keymap.set('n', '<c-h>', ':wincmd h<CR>')
 vim.keymap.set('n', '<c-l>', ':wincmd l<CR>')
 
- -- split window vertically
-vim.keymap.set("n", "<leader>sh", "<C-w>s") -- split window horizontally
-vim.keymap.set("n", "<leader>se", "<C-w>=") -- make split windows equal width & height
-vim.keymap.set("n", "<leader>sx", ":close<CR>") -- close current split window
-vim.keymap.set("n", "<leader>to", ":tabnew<CR>") -- open new tab
+-- split window vertically
+vim.keymap.set("n", "<leader>sh", "<C-w>s")        -- split window horizontally
+vim.keymap.set("n", "<leader>se", "<C-w>=")        -- make split windows equal width & height
+vim.keymap.set("n", "<leader>sx", ":close<CR>")    -- close current split window
+vim.keymap.set("n", "<leader>to", ":tabnew<CR>")   -- open new tab
 vim.keymap.set("n", "<leader>tx", ":tabclose<CR>") -- close current tab
-vim.keymap.set("n", "<leader>tn", ":tabn<CR>") --  go to next tab
-vim.keymap.set("n", "<leader>tp", ":tabp<CR>") --  go to previous tab
+vim.keymap.set("n", "<leader>tn", ":tabn<CR>")     --  go to next tab
+vim.keymap.set("n", "<leader>tp", ":tabp<CR>")     --  go to previous tab
 
 -- Toggle between two most recent files
-vim.keymap.set("n", "<Leader><Tab>", "<C-^>", {desc = "Toggle between two most recent files"})
+vim.keymap.set("n", "<Leader><Tab>", "<C-^>", { desc = "Toggle between two most recent files" })
+
+-- Format current buffer via LSP
+vim.keymap.set("n", "<leader>fm", function()
+  vim.lsp.buf.format({ async = true })
+end, { desc = "Format buffer" })
 
 vim.wo.number = true
 vim.opt.clipboard = "unnamedplus"
-
+vim.opt.mouse = "a"
