@@ -44,3 +44,6 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 # [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
 
 PATH=~/.console-ninja/.bin:$PATH
+export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
+export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
+export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"

@@ -12,14 +12,13 @@ return {
         ensure_installed = {
           "eslint",
           "lua_ls",
-          "tsserver",
+          "ts_ls",
           "jsonls",
           "html",
           "cssls",
           "dotls",
           "gopls",
           -- "marksman",
-          "eslint",
           -- "ts_ls",
           "graphql",
           "intelephense",
@@ -31,46 +30,55 @@ return {
           "docker_compose_language_service",
           "bashls",
         },
+        automatic_enable = false,
       })
     end,
   },
   {
     "neovim/nvim-lspconfig",
     config = function()
-      local lspconfig = require("lspconfig")
-      lspconfig.lua_ls.setup({})
-      lspconfig.tsserver.setup({
-        init_options = {
-          preferences = {
-            disableSuggestions = true,
+      vim.diagnostic.config({
+        virtual_text = {
+          source = "if_many",
+        },
+        float = {
+          source = "always",
+          border = "rounded",
+        },
+        severity_sort = true,
+      })
+
+      local servers = {
+        lua_ls = {},
+        ts_ls = {
+          init_options = {
+            preferences = {
+              disableSuggestions = true,
+            },
           },
         },
-      })
-      -- lspconfig.ts_ls.setup({
-      --   init_options = {
-      --     preferences = {
-      --       disableSuggestions = true,
-      --     },
-      --   },
-      -- })
-      lspconfig.graphql.setup({})
-      lspconfig.eslint.setup({})
-      lspconfig.jsonls.setup({})
-      lspconfig.html.setup({})
-      lspconfig.cssls.setup({})
-      lspconfig.dotls.setup({})
-      lspconfig.gopls.setup({})
-      -- lspconfig.marksman.setup({})
-      lspconfig.intelephense.setup({})
-      -- lspconfig.pylsp.setup({})
-      lspconfig.sqlls.setup({})
-      -- lspconfig.rust_analyzer.setup({})
-      -- lspconfig.vuels.setup({})
-      lspconfig.dockerls.setup({})
-      lspconfig.docker_compose_language_service.setup({})
-      lspconfig.bashls.setup({})
-      lspconfig.eslint.setup({})
+        graphql = {},
+        eslint = {},
+        jsonls = {},
+        html = {},
+        cssls = {},
+        dotls = {},
+        gopls = {},
+        intelephense = {},
+        sqlls = {},
+        dockerls = {},
+        docker_compose_language_service = {},
+        bashls = {},
+      }
 
+      for server, config in pairs(servers) do
+        vim.lsp.config(server, config)
+        vim.lsp.enable(server)
+      end
+
+      vim.keymap.set("n", "gl", vim.diagnostic.open_float, { desc = "Show diagnostics for line" })
+      vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, { desc = "Previous diagnostic" })
+      vim.keymap.set("n", "]d", vim.diagnostic.goto_next, { desc = "Next diagnostic" })
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
       vim.keymap.set("n", "gd", vim.lsp.buf.definition, {})
       vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, {})

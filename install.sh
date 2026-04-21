@@ -70,7 +70,6 @@ ln -s $DOTFILES/zsh/.zshrc $HOME/.zshrc
 # Setup Homebrew
 echo "${GREEN}Update brew and install packages...${RESET}"
 brew update
-brew tap homebrew/bundle
 brew bundle --file Brewfile
 
 # Setup nvim

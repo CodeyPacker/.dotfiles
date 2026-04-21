@@ -1,5 +1,5 @@
 return {
-  "lke/snacks.nvim",
+  "folke/snacks.nvim",
   priority = 1000,
   lazy = false,
   ---@type snacks.Config
@@ -32,25 +32,9 @@ return {
         },
       },
       sources = {
-        marks = {
-          finder = function(opts, ctx)
-            local items = require("snacks.picker.source.vim").marks(opts, ctx)
-            local ret = {}
-            for _, item in ipairs(items) do
-              if item.label and item.label:match("^[a-z]$") then
-                table.insert(ret, item)
-              end
-            end
-            return ret
-          end,
-          win = {
-            input = {
-              keys = {
-                ["dd"] = { "mark_delete", mode = { "n", "i" } },
-                ["<leader>e"] = { "close", mode = { "n", "i" } },
-              },
-            },
-          },
+        explorer = {
+          hidden = true,
+          ignored = true,
         },
       },
     },
@@ -61,6 +45,11 @@ return {
     scroll = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
+    zen = {
+      toggles = {
+        dim = false,
+      },
+    },
   },
   config = function(_, opts)
     require("snacks").setup(opts)
@@ -77,44 +66,6 @@ return {
     { "<leader>nh", function() Snacks.picker.notifications() end, desc = "Notification History" },
     { "<leader>sn", function() Snacks.scratch.open() end, desc = "New scratch" },
     { "<leader>sl", function() Snacks.picker.scratch() end, desc = "Scratch list" },
-    {
-      "<leader>m",
-      function()
-        local used = {}
-        for _, m in ipairs(vim.fn.getmarklist(0)) do
-          local name = m.mark:sub(2, 2)
-          if name:match("^[a-z]$") then
-            used[name] = true
-          end
-        end
-        local mark = "a"
-        for code = string.byte("a"), string.byte("z") do
-          local ch = string.char(code)
-          if not used[ch] then
-            mark = ch
-            break
-          end
-        end
-        vim.cmd.normal({ args = { "m" .. mark }, bang = true })
-        Snacks.notify(string.format("Set mark '%s'", mark), { title = "Marks" })
-      end,
-      desc = "Set Mark (auto)",
-    },
-    {
-      "<leader>e",
-      function()
-        local existing = Snacks.picker.get({ source = "marks" })[1]
-        if existing then
-          existing:close()
-          return
-        end
-        Snacks.picker.marks({
-          global = false,
-          ["local"] = true,
-        })
-      end,
-      desc = "Toggle Marks",
-    },
     { "<leader>fr", function() Snacks.picker.recent() end,                                  desc = "Recent" },
     { "<leader>fp", function() Snacks.picker.projects() end,                                desc = "Projects" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },

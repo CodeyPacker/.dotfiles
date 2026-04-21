@@ -2,7 +2,7 @@ Dotfiles for my macOS setup: zsh + Neovim + tmux + kitty + starship, managed wit
 
 ## Highlights
 - Zsh with Oh My Zsh, Powerlevel10k prompt, autosuggestions, and starship for shell info.
-- Neovim (Lazy-managed) with Snacks (picker/explorer/terminal), Catppuccin theme, LSP formatting, and Which-Key hints.
+- Neovim (Lazy-managed) with Snacks (picker/explorer/terminal), Harpoon file marks, Catppuccin theme, LSP formatting, and Which-Key hints.
 - Tmux config, Kitty terminal theme, and bundled developer fonts.
 - Homebrew bundle (`Brewfile`) to install CLI tools (ripgrep, tmux, neovim, lazygit, etc.) and Kitty.
 
@@ -20,7 +20,7 @@ The script will:
 > Note: install.sh assumes macOS and will overwrite existing configs it manages (zshrc, nvim, tmux, kitty, starship, Powerlevel10k).
 
 ## Key things configured
-- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>t` terminal, `<leader>tg` lazygit, marks on `<leader>m`/`<leader>e`), LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Catppuccin theme.
+- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>t` terminal, `<leader>tg` lazygit), Harpoon on `<leader>m`/`<leader>e`, LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Catppuccin theme.
 - **Shell**: Zsh + Oh My Zsh + Powerlevel10k + starship prompt; autosuggestions.
 - **Tmux**: Custom tmux.conf (see `tmux/tmux.conf`).
 - **Kitty**: Config in `kitty/kitty.conf`; fonts linked to `~/Library/Fonts`.

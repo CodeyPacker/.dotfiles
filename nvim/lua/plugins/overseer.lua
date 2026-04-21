@@ -13,10 +13,10 @@ return {
     },
   },
   keys = {
-    { "<leader>os", "<cmd>OverseerRun<CR>", desc = "Run task" },
-    { "<leader>ol", function() require("overseer").toggle({ direction = "float" }) end, desc = "Task list (float)" },
+    { "<leader>tr", "<cmd>OverseerRun<CR>", desc = "Run task" },
+    { "<leader>tl", function() require("overseer").toggle({ direction = "float" }) end, desc = "Task list (float)" },
     {
-      "<leader>or",
+      "<leader>tR",
       function()
         local ok, overseer = pcall(require, "overseer.task_list")
         if not ok or not overseer then

@@ -3,15 +3,10 @@ return {
   event = "VeryLazy",
   opts = {
     plugins = { spelling = false },
-    defaults = {},
+    spec = {
+      { "<leader>f", group = "Find" },
+      { "<leader>t", group = "Tabs/Toggle" },
+      { "<leader>s", group = "Splits" },
+    },
   },
-  config = function(_, opts)
-    local wk = require("which-key")
-    wk.setup(opts)
-    wk.register({
-      ["<leader>f"] = { name = "Find" },
-      ["<leader>t"] = { name = "Tabs/Toggle" },
-      ["<leader>s"] = { name = "Splits" },
-    })
-  end,
 }
