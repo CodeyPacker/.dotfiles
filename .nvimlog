@@ -4,3 +4,5 @@ WRN 2026-03-09T22:11:27.353 ?.70972    server_start:199: Failed to start server:
 WRN 2026-03-09T22:12:39.255 ?.71964    server_start:199: Failed to start server: operation not permitted: /var/folders/w9/1dk3pvg97zl6m2wwyzv81p080000gp/T/nvim.cody.packer/bP5OCs/nvim.71964.0
 WRN 2026-04-21T13:53:47.378 ?.94680    server_start:199: Failed to start server: operation not permitted: /var/folders/w9/1dk3pvg97zl6m2wwyzv81p080000gp/T/nvim.cody.packer/8FUTo6/nvim.94680.0
 WRN 2026-04-21T13:54:06.499 ?.95139    server_start:199: Failed to start server: operation not permitted: /var/folders/w9/1dk3pvg97zl6m2wwyzv81p080000gp/T/nvim.cody.packer/qtay9C/nvim.95139.0
+WRN 2026-04-21T14:04:46.391 ?.9318     server_start:199: Failed to start server: operation not permitted: /var/folders/w9/1dk3pvg97zl6m2wwyzv81p080000gp/T/nvim.cody.packer/su86W6/nvim.9318.0
+WRN 2026-04-21T14:04:46.391 ?.9317     server_start:199: Failed to start server: operation not permitted: /var/folders/w9/1dk3pvg97zl6m2wwyzv81p080000gp/T/nvim.cody.packer/04HNsq/nvim.9317.0

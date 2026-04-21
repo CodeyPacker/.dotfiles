@@ -32,16 +32,11 @@ return {
 
 			vim.cmd.colorscheme("catppuccin")
 
-			-- Apply transparency consistently
 			local elements = {
 				"Normal",
 				"NonText",
 				"NormalNC",
-				"NvimTreeNormal",
-				"NvimTreeNormalNC",
 				"StatusLineNC",
-				"NvimTreeVertSplit",
-				"NvimTreeWinSeparator",
 				"VertSplit",
 				"HarpoonWindow",
 				"NormalFloat",
@@ -49,22 +44,17 @@ return {
 				"Pmenu",
 				"PmenuSel",
 				"StatusLine",
-				"NvimTreeStatusLine",
-				"NvimTreeStatusLineNC",
+        "EndOfBuffer",
+        "LineNr",
 			}
 
 			for _, element in ipairs(elements) do
-				vim.cmd(string.format("highlight %s guibg=NONE ctermbg=NONE", element))
+				vim.api.nvim_set_hl(0, element, { bg = "NONE", ctermbg = "NONE" })
 			end
 
-      -- Make line numbers a lighter shade for visibility
-      vim.cmd("highlight LineNr guifg=#A5ADCB ctermfg=240")
-
-      -- Set NonText (~ symbols) to a less obtrusive color matching the theme
-      vim.cmd("highlight NonText guifg=#494D64 ctermfg=238")
-
-      -- Optional: Set EndOfBuffer to match NonText
-      vim.cmd("highlight EndOfBuffer guifg=#494D64 ctermfg=238")
+      vim.api.nvim_set_hl(0, "LineNr", { fg = "#A5ADCB", bg = "NONE", ctermfg = 240, ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "NonText", { fg = "#494D64", bg = "NONE", ctermfg = 238, ctermbg = "NONE" })
+      vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = "#494D64", bg = "NONE", ctermfg = 238, ctermbg = "NONE" })
 		end,
 	},
 }

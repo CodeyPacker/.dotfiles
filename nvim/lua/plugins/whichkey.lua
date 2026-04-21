@@ -4,9 +4,15 @@ return {
   opts = {
     plugins = { spelling = false },
     spec = {
+      { "<leader><tab>", desc = "Toggle Recent File" },
+      { "<leader>b", desc = "Toggle Explorer" },
+      { "<leader>c", group = "Code" },
       { "<leader>f", group = "Find" },
-      { "<leader>t", group = "Tabs/Toggle" },
-      { "<leader>s", group = "Splits" },
+      { "<leader>m", group = "Marks/Markdown" },
+      { "<leader>n", group = "Notifications" },
+      { "<leader>s", group = "Splits/Scratch" },
+      { "<leader>t", group = "Tabs/Tasks/Toggle" },
+      { "<leader>z", desc = "Toggle Zen Mode" },
     },
   },
 }

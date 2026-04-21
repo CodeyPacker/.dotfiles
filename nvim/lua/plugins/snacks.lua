@@ -5,7 +5,7 @@ return {
   ---@type snacks.Config
   opts = {
     bigfile = { enabled = true },
-    dashboard = { enabled = true },
+    dashboard = { enabled = false },
     explorer = {
       enabled = true,
       win = {
@@ -41,10 +41,10 @@ return {
     notifier = { enabled = true },
     quickfile = { enabled = true },
     scratch = { enabled = true },
-    scope = { enabled = true },
-    scroll = { enabled = true },
-    statuscolumn = { enabled = true },
-    words = { enabled = true },
+    scope = { enabled = false },
+    scroll = { enabled = false },
+    statuscolumn = { enabled = false },
+    words = { enabled = false },
     zen = {
       toggles = {
         dim = false,
@@ -53,24 +53,23 @@ return {
   },
   config = function(_, opts)
     require("snacks").setup(opts)
-    -- Make picker directory paths slightly lighter for readability
-    vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#8AADF4" })
 
+    vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#8AADF4" })
   end,
   keys = {
-    { "<leader>ff", function() Snacks.picker.files() end,     desc = "Find Files" },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>fg", function() Snacks.picker.git_files() end, desc = "Find Git Files" },
-    { "<leader>fs", function() Snacks.picker.grep() end,      desc = "Find String (grep)" },
-    { "<leader>fb", function() Snacks.picker.buffers() end,   desc = "Buffers" },
-    { "<leader>b",  function() Snacks.explorer() end,         desc = "Toggle Explorer" },
+    { "<leader>fs", function() Snacks.picker.grep() end, desc = "Find String (Grep)" },
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find Buffers" },
+    { "<leader>b", function() Snacks.explorer() end, desc = "Toggle Explorer" },
     { "<leader>nh", function() Snacks.picker.notifications() end, desc = "Notification History" },
     { "<leader>sn", function() Snacks.scratch.open() end, desc = "New scratch" },
     { "<leader>sl", function() Snacks.picker.scratch() end, desc = "Scratch list" },
-    { "<leader>fr", function() Snacks.picker.recent() end,                                  desc = "Recent" },
-    { "<leader>fp", function() Snacks.picker.projects() end,                                desc = "Projects" },
+    { "<leader>fr", function() Snacks.picker.recent() end, desc = "Recent Files" },
+    { "<leader>fp", function() Snacks.picker.projects() end, desc = "Projects" },
     { "<leader>fc", function() Snacks.picker.files({ cwd = vim.fn.stdpath("config") }) end, desc = "Find Config File" },
-    { "<leader>z",  function() Snacks.zen() end,                                            desc = "Toggle Zen Mode" },
+    { "<leader>z", function() Snacks.zen() end, desc = "Toggle Zen Mode" },
     { "<leader>tt", function() Snacks.terminal() end, desc = "Toggle Terminal", mode = { "n", "t" } },
-    { "<leader>tg", function() Snacks.lazygit() end,  desc = "Toggle Lazygit",  mode = { "n", "t" } },
+    { "<leader>tg", function() Snacks.lazygit() end, desc = "Toggle Lazygit", mode = { "n", "t" } },
   },
 }
