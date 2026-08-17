@@ -70,6 +70,24 @@ apply_overlay(
   "machine-local WezTerm override"
 )
 
+-- Open the first window inset by a fixed percentage of the active screen on
+-- every machine, regardless of resolution.
+local STARTUP_SCREEN_INSET = 0.1
+
+wezterm.on("gui-startup", function(cmd)
+  local screen = wezterm.gui.screens().active
+  local width = math.floor(screen.width * (1 - STARTUP_SCREEN_INSET * 2))
+  local height = math.floor(screen.height * (1 - STARTUP_SCREEN_INSET * 2))
+
+  local _, _, window = wezterm.mux.spawn_window(cmd or {})
+  local gui_window = window:gui_window()
+  gui_window:set_inner_size(width, height)
+  gui_window:set_position(
+    screen.x + math.floor((screen.width - width) / 2),
+    screen.y + math.floor((screen.height - height) / 2)
+  )
+end)
+
 -- Dim unfocused windows so the active workspace stays visually obvious.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
 local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.62

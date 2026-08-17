@@ -1,5 +1,12 @@
 onboarding = false
 
+# Sidebar row highlights use surface_dim. Let the terminal background show
+# through instead of filling them with an opaque block.
+[theme.custom]
+surface_dim = "reset"
+panel_bg = "reset"
+accent = "reset"
+
 [keys]
 prefix = "ctrl+a"
 focus_pane_left  = "prefix+h"
