@@ -1,10 +1,11 @@
-Dotfiles for my macOS setup: zsh + Neovim + tmux + kitty + starship, managed with Homebrew and an install script that symlinks everything into place.
+Dotfiles for my macOS setup: zsh + Neovim + WezTerm + Herdr + tmux + kitty + starship, managed with Homebrew and an install script that symlinks everything into place.
 
 ## Highlights
 - Zsh with Oh My Zsh, Powerlevel10k prompt, autosuggestions, and starship for shell info.
-- Neovim (Lazy-managed) with Snacks (picker/explorer/terminal), Harpoon file marks, Catppuccin theme, LSP formatting, and Which-Key hints.
-- Tmux config, Kitty terminal theme, and bundled developer fonts.
-- Homebrew bundle (`Brewfile`) to install CLI tools (ripgrep, tmux, neovim, lazygit, etc.) and Kitty.
+- Neovim (Lazy-managed) with Snacks (picker/explorer/terminal), Harpoon file marks, Rosé Pine Moon, LSP formatting, and Which-Key hints.
+- WezTerm and Neovim share Rosé Pine Moon, Hack Nerd Font, transparent backgrounds, and subdued inactive windows.
+- Herdr provides persistent, agent-aware workspaces and panes while the original tmux and Kitty configs remain available.
+- Homebrew bundle (`Brewfile`) installs the CLI tools, WezTerm, Herdr, Kitty, and Hack Nerd Font.
 
 ## Quick install
 ```bash
@@ -14,15 +15,17 @@ cd ~/.dotfiles
 ```
 The script will:
 - Install Oh My Zsh + Powerlevel10k if missing.
-- Install Homebrew (if needed) and run `brew bundle --file Brewfile`.
-- Symlink configs into `~/.config` and your home directory (zsh, nvim, tmux, kitty, starship, fonts).
+- Install Homebrew (if needed) and run the repository's `Brewfile`.
+- Symlink configs into `~/.config` and your home directory (zsh, Neovim, tmux, Kitty, WezTerm, Herdr, Starship, and fonts).
 
-> Note: install.sh assumes macOS and will overwrite existing configs it manages (zshrc, nvim, tmux, kitty, starship, Powerlevel10k).
+> Note: install.sh assumes macOS and will overwrite existing configs it manages (zshrc, Neovim, tmux, Kitty, WezTerm, Herdr, Starship, and Powerlevel10k).
 
 ## Key things configured
-- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>t` terminal, `<leader>tg` lazygit), Harpoon on `<leader>m`/`<leader>e`, LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Catppuccin theme.
+- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>tt` terminal, `<leader>tg` lazygit), Harpoon on `<leader>m`/`<leader>e`, LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Rosé Pine Moon theme.
+- **WezTerm**: Kun Chen-inspired frameless Rosé Pine Moon setup with 80% opacity, macOS blur, and dimmed unfocused windows.
+- **Herdr**: Agent-aware pane manager using tmux-style `Ctrl-a` navigation and grouped workspaces.
 - **Shell**: Zsh + Oh My Zsh + Powerlevel10k + starship prompt; autosuggestions.
-- **Tmux**: Custom tmux.conf (see `tmux/tmux.conf`).
+- **Tmux**: Original custom tmux.conf retained as a fallback (see `tmux/tmux.conf`).
 - **Kitty**: Config in `kitty/kitty.conf`; fonts linked to `~/Library/Fonts`.
 
 ## Updating

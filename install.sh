@@ -70,7 +70,7 @@ ln -s $DOTFILES/zsh/.zshrc $HOME/.zshrc
 # Setup Homebrew
 echo "${GREEN}Update brew and install packages...${RESET}"
 brew update
-brew bundle --file Brewfile
+brew bundle --file "$DOTFILES/Brewfile"
 
 # Setup nvim
 echo "${GREEN}Init Neovim Config...${RESET}"
@@ -91,10 +91,19 @@ echo "${GREEN}Init kitty/kitty.conf...${RESET}"
 rm -rf $HOME/.config/kitty/kitty.conf
 ln -s $DOTFILES/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
 
+# Setup WezTerm
+echo "${GREEN}Init WezTerm config...${RESET}"
+rm -rf "$HOME/.config/wezterm"
+ln -s "$DOTFILES/wezterm" "$HOME/.config/wezterm"
+
+# Setup Herdr
+echo "${GREEN}Init Herdr config...${RESET}"
+rm -rf "$HOME/.config/herdr"
+ln -s "$DOTFILES/herdr" "$HOME/.config/herdr"
+
 # Setup Starship
 echo "${GREEN}Init .config/starship.toml...${RESET}"
 rm -rf $HOME/.config/starship.toml
 ln -s $DOTFILES/starship/starship.toml $HOME/.config/starship.toml
 
 echo "${GREEN}Done!${RESET}"
-

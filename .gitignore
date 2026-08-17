@@ -8,3 +8,9 @@ Brewfile.lock.json
 
 #Neovim
 nvim/lazy-lock.jso
+
+# Herdr runtime state
+herdr/.plugins.lock
+herdr/*.log
+herdr/session.json
+herdr/sessions/

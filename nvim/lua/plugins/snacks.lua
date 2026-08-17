@@ -36,6 +36,26 @@ return {
           hidden = true,
           ignored = true,
         },
+        marks = {
+          finder = function(opts, ctx)
+            local items = require("snacks.picker.source.vim").marks(opts, ctx)
+            local ret = {}
+            for _, item in ipairs(items) do
+              if item.label and item.label:match("^[a-z]$") then
+                table.insert(ret, item)
+              end
+            end
+            return ret
+          end,
+          win = {
+            input = {
+              keys = {
+                ["dd"] = { "mark_delete", mode = { "n", "i" } },
+                ["<leader>e"] = { "close", mode = { "n", "i" } },
+              },
+            },
+          },
+        },
       },
     },
     notifier = { enabled = true },
