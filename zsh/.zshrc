@@ -45,5 +45,4 @@ source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 PATH=~/.console-ninja/.bin:$PATH
 export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
-export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
-export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"

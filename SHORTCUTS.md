@@ -28,7 +28,7 @@ This file is the canonical shortcut reference for this repo. Keep it in sync wit
 
 - `<leader>b`: toggle the file explorer
 - `<leader>m`: mark the current file in Harpoon
-- `<leader>e`: show Harpoon marks
+- `<leader>me`: show Harpoon marks
 - `<leader>sn`: open a new scratch buffer
 - `<leader>sl`: list scratch buffers
 - `<leader>nh`: open notification history
@@ -39,10 +39,10 @@ This file is the canonical shortcut reference for this repo. Keep it in sync wit
 - `<leader>sh`: split the current window below
 - `<leader>se`: equalize split sizes
 - `<leader>sx`: close the current split
-- `<leader>to`: open a new tab
-- `<leader>tx`: close the current tab
-- `<leader>tn`: go to the next tab
-- `<leader>tp`: go to the previous tab
+- `<leader>To`: open a new tab
+- `<leader>Tx`: close the current tab
+- `<leader>Tn`: go to the next tab
+- `<leader>Tp`: go to the previous tab
 
 ## Tasks And Terminal
 
@@ -65,7 +65,7 @@ This file is the canonical shortcut reference for this repo. Keep it in sync wit
 
 ## Markdown And AI
 
-- `<leader>md`: preview the current Markdown file
+- `<leader>xd`: preview the current Markdown file
 - `<C-;>` in insert mode: accept Copilot suggestion
 - `<C-/>` in insert mode: dismiss Copilot suggestion
 

@@ -6,10 +6,10 @@ return {
     task_list = {
       bindings = { ["<Esc>"] = "Close" },
       direction = "float",
-      width = 0.8,
-      height = 0.8,
-      max_width = 0.8,
-      max_height = 0.8,
+      width = 0.5,
+      height = 0.5,
+      max_width = 0.5,
+      max_height = 0.5,
     },
   },
   keys = {
@@ -18,7 +18,7 @@ return {
     {
       "<leader>tR",
       function()
-        local ok, overseer = pcall(require, "overseer.task_list")
+        local ok, overseer = pcall(require, "overseer")
         if not ok or not overseer then
           return
         end

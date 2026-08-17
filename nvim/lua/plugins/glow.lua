@@ -8,6 +8,6 @@ return {
     border = "rounded",
   },
   keys = {
-    { "<leader>md", "<cmd>Glow<CR>", desc = "Preview Markdown" },
+    { "<leader>xd", "<cmd>Glow<CR>", desc = "Preview Markdown" },
   },
 }

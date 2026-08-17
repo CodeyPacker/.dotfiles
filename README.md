@@ -20,7 +20,7 @@ The script will:
 > Note: install.sh assumes macOS and will overwrite existing configs it manages (zshrc, nvim, tmux, kitty, starship, Powerlevel10k).
 
 ## Key things configured
-- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>t` terminal, `<leader>tg` lazygit), Harpoon on `<leader>m`/`<leader>e`, LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Catppuccin theme.
+- **Neovim**: Snacks keymaps (`<leader>ff` files, `<leader>fs` grep, `<leader>fb` buffers, `<leader>b` explorer, `<leader>tt` terminal, `<leader>tg` lazygit), Harpoon on `<leader>m`/`<leader>me`, LSP format on `<leader>fm`, mouse enabled for clicking in explorer, Catppuccin theme.
 - **Shell**: Zsh + Oh My Zsh + Powerlevel10k + starship prompt; autosuggestions.
 - **Tmux**: Custom tmux.conf (see `tmux/tmux.conf`).
 - **Kitty**: Config in `kitty/kitty.conf`; fonts linked to `~/Library/Fonts`.
