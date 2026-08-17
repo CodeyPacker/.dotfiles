@@ -66,5 +66,8 @@ link_path "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
 link_path "$DOTFILES_ROOT/wezterm" "$HOME/.config/wezterm"
 link_path "$DOTFILES_ROOT/herdr" "$HOME/.config/herdr"
 link_path "$DOTFILES_ROOT/starship/starship.toml" "$HOME/.config/starship.toml"
+link_path "$DOTFILES_ROOT/ai/prompts" "$HOME/.config/ai-prompts"
+link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.claude/CLAUDE.md"
+link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.codex/AGENTS.md"
 
 echo "Done. Open a new terminal to load the updated configuration."

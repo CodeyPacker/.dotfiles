@@ -72,6 +72,37 @@ function Set-DirectoryJunction {
   Write-Host "Linked $Target -> $Source" -ForegroundColor Green
 }
 
+function Set-FileSymbolicLink {
+  param(
+    [Parameter(Mandatory)][string]$Source,
+    [Parameter(Mandatory)][string]$Target
+  )
+
+  $item = Get-Item -LiteralPath $Target -Force -ErrorAction SilentlyContinue
+  if ($item) {
+    $resolvedTarget = $null
+    $hasLinkType = $null -ne $item.PSObject.Properties["LinkType"]
+    $hasTarget = $null -ne $item.PSObject.Properties["Target"]
+    if ($hasLinkType -and $hasTarget -and $item.LinkType -eq "SymbolicLink" -and $item.Target) {
+      $resolvedTarget = [System.IO.Path]::GetFullPath([string]$item.Target)
+    }
+    if ($resolvedTarget -eq [System.IO.Path]::GetFullPath($Source)) {
+      Write-Host "Already linked: $Target" -ForegroundColor Cyan
+      return
+    }
+    Backup-Path -Path $Target
+  }
+
+  New-Item -ItemType Directory -Path (Split-Path -Parent $Target) -Force | Out-Null
+  try {
+    New-Item -ItemType SymbolicLink -Path $Target -Target $Source | Out-Null
+  }
+  catch {
+    throw "Unable to create $Target. Enable Windows Developer Mode or rerun PowerShell as Administrator. $($_.Exception.Message)"
+  }
+  Write-Host "Linked $Target -> $Source" -ForegroundColor Green
+}
+
 function Set-PowerShellLoader {
   $loaderPath = Join-Path $dotfilesRoot "powershell\profile.ps1"
   $profilePath = $PROFILE.CurrentUserAllHosts
@@ -201,6 +232,11 @@ New-Item -ItemType Directory -Path $localConfigRoot -Force | Out-Null
 
 $nvimTarget = Join-Path $env:LOCALAPPDATA "nvim"
 Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "nvim") -Target $nvimTarget
+$promptRoot = Join-Path $dotfilesRoot "ai\prompts"
+$promptPath = Join-Path $promptRoot "sr_opus_5_system_prompt.md"
+Set-DirectoryJunction -Source $promptRoot -Target (Join-Path $HOME ".config\ai-prompts")
+Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".claude\CLAUDE.md")
+Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".codex\AGENTS.md")
 Set-PowerShellLoader
 
 Write-Host ""

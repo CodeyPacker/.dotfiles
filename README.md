@@ -6,6 +6,7 @@ Shared terminal and editor configuration for macOS, native Windows, and WSL:
 - WezTerm with platform-specific macOS blur or Windows Acrylic styling.
 - Herdr with `Ctrl+A` prefix navigation and grouped agent panes.
 - Starship with the same prompt and palette in Zsh and PowerShell.
+- Shared global AI instructions for Claude Code and Codex.
 - Machine profiles and private local overrides without hardcoded usernames or drive letters.
 
 ## Profiles
@@ -86,6 +87,21 @@ powershell/powershell.local.ps1.example -> ~/.config/dotfiles/powershell.local.p
 
 Examples include selecting a particular WSL distribution, changing one machine's
 font size, or defining a work-only project root.
+
+## Shared AI prompts
+
+Personal prompts live under `ai/prompts/` and are linked to
+`~/.config/ai-prompts` on every supported platform. The current shared prompt is
+the unchanged MIT-licensed prompt from
+[`disler/fixing-smartass-opus-5`](https://github.com/disler/fixing-smartass-opus-5).
+
+The installers also activate it as global personal guidance:
+
+- Claude Code reads it through `~/.claude/CLAUDE.md`.
+- Codex reads it through `~/.codex/AGENTS.md`.
+
+Restart the agent after changing the prompt. Project-level instruction files
+remain more specific and can add to or override the global guidance.
 
 ## Useful Herdr shortcuts
 
