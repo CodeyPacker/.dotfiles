@@ -1,0 +1,2 @@
+-- Copy to ~/.config/dotfiles/nvim.local.lua for machine-only editor settings.
+-- vim.opt.guifont = "Hack Nerd Font:h14"

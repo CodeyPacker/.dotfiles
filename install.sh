@@ -1,109 +1,70 @@
 #!/bin/sh
 
-# Enable immediate exit on error
-set -e
+set -eu
 
-# Colors
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-CYAN='\033[0;36m'
-RESET='\033[0m'
+if [ "$(uname -s)" != "Darwin" ]; then
+  echo "install.sh is for macOS. On WSL, run ./install-wsl.sh." >&2
+  exit 1
+fi
 
-# Paths
-DOTFILES=$HOME/.dotfiles
-OH_MY_ZSH=$HOME/.oh-my-zsh
-FONTS=$DOTFILES/fonts
-POWER_LEVEL_10K=$HOME/.oh-my-zsh/custom/themes/powerlevel10k
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+DOTFILES_ROOT=${DOTFILES_ROOT:-$SCRIPT_DIR}
+DOTFILES_PROFILE=${DOTFILES_PROFILE:-personal-mac}
+BACKUP_ROOT="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
+OH_MY_ZSH="$HOME/.oh-my-zsh"
 
-# Log errors and exit
-log_error() {
-  local message="$1"
-  echo -e "${RED}ERROR: $message${RESET}" >&2
+link_path() {
+  source_path=$1
+  target_path=$2
+
+  mkdir -p "$(dirname -- "$target_path")"
+
+  if [ -L "$target_path" ] && [ "$(readlink "$target_path")" = "$source_path" ]; then
+    echo "Already linked: $target_path"
+    return
+  fi
+
+  if [ -e "$target_path" ] || [ -L "$target_path" ]; then
+    relative_path=${target_path#"$HOME"/}
+    backup_path="$BACKUP_ROOT/$relative_path"
+    mkdir -p "$(dirname -- "$backup_path")"
+    mv "$target_path" "$backup_path"
+    echo "Backed up $target_path to $backup_path"
+  fi
+
+  ln -s "$source_path" "$target_path"
+  echo "Linked $target_path -> $source_path"
 }
 
-# Trap any command with a non-zero exit status
-trap 'log_error "Command failed with exit code $?"' ERR
+echo "Setting up macOS profile: $DOTFILES_PROFILE"
 
-echo "${GREEN}Setting Up Your Mac...${RESET}"
-
-# Install Oh-My-Zsh if not already installed
 if [ ! -d "$OH_MY_ZSH" ]; then
-  echo "${GREEN}Installing Oh-My-Zsh...${RESET}"
+  echo "Installing Oh My Zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
-else
-  echo "${CYAN}Oh-My-Zsh Already Installed${RESET}"
 fi
 
-# Install PowerLevel10K if not already installed
-if [ ! -d "$POWER_LEVEL_10K" ]; then
-  echo "${GREEN}Installing PowerLevel10K${RESET}"
-  git clone --depth=1 https://github.com/romkatv/powerlevel10k.git "$POWER_LEVEL_10K"
-else
-  echo "${CYAN}PowerLevel10K Already installed${RESET}"
-fi
-
-# Setup Powerlevel10k
-echo "${GREEN}Init PowerLevel10K Settings${RESET}"
-rm -rf $HOME/.p10k.zsh
-ln -s $DOTFILES/zsh/.p10k.zsh $HOME/.p10k.zsh
-
-# Install Homebrew if not already installed.
-if test ! $(which brew); then
-  echo "${GREEN}Installing Homebrew...${RESET}"
+if ! command -v brew >/dev/null 2>&1; then
+  echo "Installing Homebrew..."
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-  echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> $HOME/.zprofile
-  eval "$(/opt/homebrew/bin/brew shellenv)"
-else
-  echo "${CYAN}Homebrew Already Installed${RESET}"
+  if [ -x /opt/homebrew/bin/brew ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+  elif [ -x /usr/local/bin/brew ]; then
+    eval "$(/usr/local/bin/brew shellenv)"
+  fi
 fi
 
-# Check if the font is already installed
-echo "${GREEN}Installing Fonts...${RESET}"
-rsync -r --ignore-existing $FONTS/* $HOME/Library/Fonts
-
-# Setup zsh
-echo "${GREEN}Init .zshrc config...${RESET}"
-rm -rf $HOME/.zshrc
-ln -s $DOTFILES/zsh/.zshrc $HOME/.zshrc
-
-# Setup Homebrew
-echo "${GREEN}Update brew and install packages...${RESET}"
 brew update
-brew bundle --file "$DOTFILES/Brewfile"
+brew bundle --file "$DOTFILES_ROOT/Brewfile"
 
-# Setup nvim
-echo "${GREEN}Init Neovim Config...${RESET}"
-if [ ! -d "$HOME/.config" ]; then
-  mkdir "$HOME/.config"
-else
-  rm -rf $HOME/.config/nvim
-fi
-ln -s $DOTFILES/nvim $HOME/.config/nvim
+mkdir -p "$HOME/Library/Fonts" "$HOME/.config/dotfiles"
+rsync -r --ignore-existing "$DOTFILES_ROOT/fonts/" "$HOME/Library/Fonts/"
+printf '%s\n' "$DOTFILES_PROFILE" > "$HOME/.config/dotfiles/profile"
 
-# Setup tmux
-echo "${GREEN}Init .tmux.conf...${RESET}"
-rm -rf $HOME/.tmux.conf
-ln -s $DOTFILES/tmux/tmux.conf $HOME/.tmux.conf
+link_path "$DOTFILES_ROOT/zsh/.zshrc" "$HOME/.zshrc"
+link_path "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
+link_path "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
+link_path "$DOTFILES_ROOT/wezterm" "$HOME/.config/wezterm"
+link_path "$DOTFILES_ROOT/herdr" "$HOME/.config/herdr"
+link_path "$DOTFILES_ROOT/starship/starship.toml" "$HOME/.config/starship.toml"
 
-# Setup Kitty
-echo "${GREEN}Init kitty/kitty.conf...${RESET}"
-rm -rf $HOME/.config/kitty/kitty.conf
-ln -s $DOTFILES/kitty/kitty.conf $HOME/.config/kitty/kitty.conf
-
-# Setup WezTerm
-echo "${GREEN}Init WezTerm config...${RESET}"
-rm -rf "$HOME/.config/wezterm"
-ln -s "$DOTFILES/wezterm" "$HOME/.config/wezterm"
-
-# Setup Herdr
-echo "${GREEN}Init Herdr config...${RESET}"
-rm -rf "$HOME/.config/herdr"
-ln -s "$DOTFILES/herdr" "$HOME/.config/herdr"
-
-# Setup Starship
-echo "${GREEN}Init .config/starship.toml...${RESET}"
-rm -rf $HOME/.config/starship.toml
-ln -s $DOTFILES/starship/starship.toml $HOME/.config/starship.toml
-
-echo "${GREEN}Done!${RESET}"
+echo "Done. Open a new terminal to load the updated configuration."

@@ -5,15 +5,14 @@ return {
     name = "rose-pine",
     priority = 1000,
     config = function()
+      local platform = require("config.platform")
       require("rose-pine").setup({
         dark_variant = "moon",
         dim_inactive_windows = false,
         extend_background_behind_borders = false,
         styles = {
           italic = false,
-          transparency = vim.uv.os_uname().sysname == "Darwin"
-            or string.find(vim.uv.os_uname().sysname, "Windows") ~= nil
-            or string.find(vim.uv.os_uname().release, "WSL") ~= nil,
+          transparency = platform.is_macos or platform.is_windows or platform.is_wsl,
         },
       })
 

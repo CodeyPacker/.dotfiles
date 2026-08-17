@@ -1,46 +1,39 @@
-export PATH=/usr/local/bin:$PATH
-
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-# if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-#   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-# fi
-
-# Path to your oh-my-zsh installation.
+export PATH="/usr/local/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
+export EDITOR="nvim"
+export VISUAL="nvim"
 
-# Set Theme
-# ZSH_THEME="powerlevel10k/powerlevel10k"
-eval "$(starship init zsh)"
+if [[ -z "${DOTFILES_PROFILE:-}" && -r "$HOME/.config/dotfiles/profile" ]]; then
+  export DOTFILES_PROFILE="$(<"$HOME/.config/dotfiles/profile")"
+fi
 
-# Set zsh-completions
-fpath=(/usr/local/share/zsh-completions $fpath)
+if [[ -z "${DOTFILES_ROOT:-}" ]]; then
+  export DOTFILES_ROOT="${${(%):-%N}:A:h:h}"
+fi
 
-# ZSH Plugins
-plugins=(
-  git
-  nvm
-  brew
-  z
-)
+if command -v brew >/dev/null 2>&1; then
+  brew_prefix="$(brew --prefix)"
+  fpath=("$brew_prefix/share/zsh-completions" $fpath)
 
-source $ZSH/oh-my-zsh.sh
+  autosuggestions="$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
+  [[ -r "$autosuggestions" ]] && source "$autosuggestions"
 
-# -------------------
-# User Configurations
-# -------------------
+  postgresql_bin="$brew_prefix/opt/postgresql@17/bin"
+  [[ -d "$postgresql_bin" ]] && export PATH="$postgresql_bin:$PATH"
+elif [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
+  source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+fi
 
-# Aliases
-source $HOME/.dotfiles/zsh/aliases.zsh
+plugins=(git nvm brew z)
+[[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
 
-# zsh-autosuggestions
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source "$DOTFILES_ROOT/zsh/aliases.zsh"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-# [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if command -v starship >/dev/null 2>&1; then
+  eval "$(starship init zsh)"
+fi
 
-# To customize prompt, run `p10k configure` or edit ~/.dotfiles/zsh/.p10k.zsh.
-# [[ ! -f ~/.dotfiles/zsh/.p10k.zsh ]] || source ~/.dotfiles/zsh/.p10k.zsh
+local_override="$HOME/.config/dotfiles/zsh.local.zsh"
+[[ -r "$local_override" ]] && source "$local_override"
 
-export PATH="$(brew --prefix)/opt/postgresql@17/bin:$PATH"
+unset brew_prefix autosuggestions postgresql_bin local_override
