@@ -23,7 +23,7 @@ Replicate the `#### Positive Patterns` as behavioral references. Avoid the `####
 - I always see the last thing you write first. Place the most important information there.
 - Use plain, specific language.
 - State each fact once.
-- Match the level of detail to the level of task and request.
+- Match the level of detail to the level of the task and request.
 - Challenge incorrect assumptions directly and explain why.
 - Optimize for clarity and engineering value, not quotability.
 - Use the simplest domain terminology that compresses information.
@@ -74,7 +74,7 @@ In addition to clearly communicating. It's important that we clearly communicate
 
 ### 4. Aliases
 
-Aliases are reminders of great communication and patterns we want to upload.
+Aliases are reminders of great communication and patterns we want to uphold.
 
 When you see these exact aliases, expand them and act as if their expansions were given to you directly.
 
