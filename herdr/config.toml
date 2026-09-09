@@ -1,5 +1,8 @@
 onboarding = false
 
+[terminal]
+default_shell = "pwsh.exe"
+
 # Sidebar row highlights use surface_dim. Let the terminal background show
 # through instead of filling them with an opaque block.
 [theme.custom]

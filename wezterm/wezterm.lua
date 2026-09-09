@@ -8,16 +8,56 @@ local is_windows = target:find("windows") ~= nil
 config.color_scheme = "rose-pine-moon"
 config.font = wezterm.font("Hack Nerd Font")
 config.font_size = 15.0
-config.window_background_opacity = 0.8
+config.window_background_opacity = 1 
 config.hide_tab_bar_if_only_one_tab = true
-config.window_decorations = "RESIZE"
+
+-- The fancy tab bar renders as part of the OS title bar (window_frame
+-- colors) and ignores window_background_opacity, so it stays opaque no
+-- matter what colors.tab_bar below says. The retro tab bar is drawn inside
+-- the window surface instead and does respect it.
+config.use_fancy_tab_bar = false
+
+-- Match the tab bar to the pane background instead of the opaque bar the
+-- rose-pine-moon scheme draws by default.
+config.colors = {
+  tab_bar = {
+    background = "rgba(0, 0, 0, 0)",
+    active_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
+    inactive_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#908caa" },
+    inactive_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
+    new_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#908caa" },
+    new_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
+  },
+}
 
 if is_macos then
   config.font_dirs = { wezterm.home_dir .. "/Library/Fonts" }
   config.macos_window_background_blur = 50
 elseif is_windows then
-  config.win32_system_backdrop = "Acrylic"
+  -- Without this, WezTerm falls back to %COMSPEC% (cmd.exe) when no WSL
+  -- domain is available, which has none of the dotfiles aliases/profile
+  -- (no `ls`, no `vim`, etc). Use PowerShell 7 instead.
+  config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
+
+-- The OS title bar (window_decorations defaults to "TITLE|RESIZE") already
+-- gives native drag-by-titlebar and the min/max/close buttons. This extra
+-- binding lets you also drag by holding Ctrl+Shift anywhere in the pane.
+--
+-- It has to fire on *Down* rather than WezTerm's built-in Drag-based
+-- CTRL-SHIFT+drag binding, because tmux (mouse on) and other
+-- mouse-reporting apps swallow the drag motion before that binding sees it
+-- -- SHIFT only bypasses reporting capture, it doesn't stop the app from
+-- consuming the drag itself. Starting the drag-follow state on the initial
+-- click sidesteps that; `mouse_reporting = true` keeps it firing even while
+-- an app has mouse reporting enabled.
+config.mouse_bindings = config.mouse_bindings or {}
+table.insert(config.mouse_bindings, {
+  event = { Down = { streak = 1, button = "Left" } },
+  mods = "CTRL|SHIFT",
+  mouse_reporting = true,
+  action = wezterm.action.StartWindowDrag,
+})
 
 local function file_exists(path)
   local file = io.open(path, "r")
@@ -71,13 +111,15 @@ apply_overlay(
 )
 
 -- Open the first window inset by a fixed percentage of the active screen on
--- every machine, regardless of resolution.
-local STARTUP_SCREEN_INSET = 0.1
+-- every machine, regardless of resolution. Width and height insets differ
+-- because equal-percentage insets look side-heavy on a widescreen monitor.
+local STARTUP_SCREEN_WIDTH_INSET = 0.05
+local STARTUP_SCREEN_HEIGHT_INSET = 0.1
 
 wezterm.on("gui-startup", function(cmd)
   local screen = wezterm.gui.screens().active
-  local width = math.floor(screen.width * (1 - STARTUP_SCREEN_INSET * 2))
-  local height = math.floor(screen.height * (1 - STARTUP_SCREEN_INSET * 2))
+  local width = math.floor(screen.width * (1 - STARTUP_SCREEN_WIDTH_INSET * 2))
+  local height = math.floor(screen.height * (1 - STARTUP_SCREEN_HEIGHT_INSET * 2))
 
   local _, _, window = wezterm.mux.spawn_window(cmd or {})
   local gui_window = window:gui_window()
@@ -88,9 +130,34 @@ wezterm.on("gui-startup", function(cmd)
   )
 end)
 
+-- Shrink the font while nvim is the foreground process in the active pane,
+-- then restore it once nvim exits. Captured after profile/local overlays run
+-- so it reflects whatever font_size they may have set.
+local DEFAULT_FONT_SIZE = config.font_size
+local NVIM_FONT_SIZE = DEFAULT_FONT_SIZE - 2
+
+local function is_nvim(process_name)
+  if not process_name then
+    return false
+  end
+  return process_name:find("[/\\]nvim%.?e?x?e?$") ~= nil
+end
+
+wezterm.on("update-status", function(window, pane)
+  local overrides = window:get_config_overrides() or {}
+  local target_size = is_nvim(pane:get_foreground_process_name()) and NVIM_FONT_SIZE or nil
+
+  if overrides.font_size == target_size then
+    return
+  end
+
+  overrides.font_size = target_size
+  window:set_config_overrides(overrides)
+end)
+
 -- Dim unfocused windows so the active workspace stays visually obvious.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
-local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.62
+local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.9
 
 local function same_text_hsb(actual, expected)
   if actual == nil or expected == nil then
