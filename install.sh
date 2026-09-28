@@ -2,12 +2,20 @@
 
 set -eu
 
+SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
+
+if [ "$(uname -s)" = "Linux" ]; then
+  if grep -qi microsoft /proc/version 2>/dev/null; then
+    exec "$SCRIPT_DIR/install-wsl.sh" "$@"
+  fi
+  exec "$SCRIPT_DIR/install-linux.sh" "$@"
+fi
+
 if [ "$(uname -s)" != "Darwin" ]; then
-  echo "install.sh is for macOS. On WSL, run ./install-wsl.sh." >&2
+  echo "install.sh supports macOS, WSL, and Arch-based Linux." >&2
   exit 1
 fi
 
-SCRIPT_DIR=$(CDPATH= cd -- "$(dirname -- "$0")" && pwd)
 DOTFILES_ROOT=${DOTFILES_ROOT:-$SCRIPT_DIR}
 DOTFILES_PROFILE=${DOTFILES_PROFILE:-personal-mac}
 BACKUP_ROOT="$HOME/.dotfiles-backup/$(date +%Y%m%d-%H%M%S)"
