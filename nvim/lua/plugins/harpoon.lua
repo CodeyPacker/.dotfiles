@@ -5,7 +5,34 @@ return {
     "nvim-lua/plenary.nvim",
   },
   config = function()
-    require("harpoon"):setup()
+    require("harpoon"):setup({
+      default = {
+        -- Show paths relative to the file's repo root. On Windows harpoon
+        -- stores absolute paths because cwd uses backslashes and buffer
+        -- names don't.
+        display = function(item)
+          local cwd = vim.fs.normalize(vim.uv.cwd())
+          local path = vim.fs.normalize(item.value)
+          if not path:match("^%a:/") and not path:match("^/") then
+            path = cwd .. "/" .. path
+          end
+          local root = vim.fs.root(path, ".git") or cwd
+          local prefix = vim.fs.normalize(root) .. "/"
+          if path:sub(1, #prefix):lower() == prefix:lower() then
+            return path:sub(#prefix + 1)
+          end
+          return path
+        end,
+      },
+    })
+
+    -- Highlight the filename (last path segment) in the marks menu.
+    vim.api.nvim_create_autocmd("FileType", {
+      pattern = "harpoon",
+      callback = function()
+        vim.cmd([[syntax match HarpoonFilename "[^/]\+$"]])
+      end,
+    })
   end,
   keys = {
     {
@@ -19,7 +46,8 @@ return {
       "<leader>e",
       function()
         local harpoon = require("harpoon")
-        harpoon.ui:toggle_quick_menu(harpoon:list())
+        -- Blank border chars hide the border but keep room for the title.
+        harpoon.ui:toggle_quick_menu(harpoon:list(), { border = { " ", " ", " ", " ", " ", " ", " ", " " } })
       end,
       desc = "Show Marked Files",
     },

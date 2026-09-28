@@ -1,0 +1,56 @@
+{
+    "claudeCode.preferredLocation": "panel",
+    "editor.accessibilitySupport": "off",
+    "vim.useSystemClipboard": true,
+    "vim.leader": "<space>",
+    "terminal.integrated.commandsToSkipShell": [
+        "workbench.action.closePanel",
+        "workbench.files.action.focusFilesExplorer"
+    ],
+    "vim.insertModeKeyBindingsNonRecursive": [
+        { "before": ["j", "k"], "after": ["<Esc>"] }
+    ],
+    "vim.normalModeKeyBindingsNonRecursive": [
+        { "before": ["x"], "after": ["\"", "_", "x"] },
+        { "before": ["X"], "after": ["\"", "_", "X"] },
+        { "before": ["c"], "after": ["\"", "_", "c"] },
+        { "before": ["C"], "after": ["\"", "_", "C"] },
+        { "before": ["s"], "after": ["\"", "_", "s"] },
+        { "before": ["S"], "after": ["\"", "_", "S"] },
+        { "before": ["<C-c>"], "after": ["\"", "+", "y", "y"] },
+        { "before": ["leader", "f", "f"], "commands": ["workbench.action.quickOpen"] },
+        { "before": ["leader", "f", "s"], "commands": ["workbench.action.findInFiles"] },
+        { "before": ["leader", "f", "r"], "commands": ["workbench.action.openRecent"] },
+        { "before": ["leader", "b"], "commands": ["workbench.action.toggleSidebarVisibility"] },
+        { "before": ["leader", "z"], "commands": ["workbench.action.toggleZenMode"] },
+        { "before": ["leader", "m"], "commands": ["harpoon.mark"] },
+        { "before": ["leader", "e"], "commands": ["harpoon.menu"] },
+        { "before": ["leader", "f", "m"], "commands": ["editor.action.formatDocument"] },
+        { "before": ["leader", "f", "p"], "commands": ["projectManager.listProjects"] }
+    ],
+    "vim.visualModeKeyBindingsNonRecursive": [
+        { "before": ["x"], "after": ["\"", "_", "x"] },
+        { "before": ["c"], "after": ["\"", "_", "c"] },
+        { "before": ["<C-c>"], "after": ["\"", "+", "y"] }
+    ],
+    "workbench.secondarySideBar.defaultVisibility": "hidden",
+    "claudeCode.hideOnboarding": true,
+    "workbench.navigationControl.enabled": false,
+    "chat.titleBar.openInAgentsWindow.enabled": false,
+    "workbench.layoutControl.enabled": false,
+    "[javascript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[javascriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[typescript]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[typescriptreact]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[json]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[jsonc]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[css]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[scss]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[html]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[markdown]": { "editor.defaultFormatter": "esbenp.prettier-vscode" },
+    "[yaml]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "csharp.format.enable": false
+}

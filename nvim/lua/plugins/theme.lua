@@ -1,49 +1,52 @@
+-- Match VS Code's default "Dark 2026" theme: Dark+ syntax colors with the
+-- 2026 editor chrome palette.
 return {
   {
-    "rose-pine/neovim",
+    "Mofiqul/vscode.nvim",
     lazy = false,
-    name = "rose-pine",
     priority = 1000,
     config = function()
-      local platform = require("config.platform")
-      require("rose-pine").setup({
-        dark_variant = "moon",
-        dim_inactive_windows = false,
-        extend_background_behind_borders = false,
-        styles = {
-          italic = false,
-          transparency = platform.is_macos or platform.is_windows or platform.is_wsl,
+      require("vscode").setup({
+        style = "dark",
+        italic_comments = false,
+        color_overrides = {
+          vscFront = "#bbbebf",
+          vscBack = "#121314",
+          vscTabCurrent = "#121314",
+          vscTabOther = "#191a1b",
+          vscTabOutside = "#191a1b",
+          vscLeftDark = "#191a1b",
+          vscPopupFront = "#bfbfbf",
+          vscPopupBack = "#202122",
+          vscSplitDark = "#2a2b2c",
+          vscCursorDarkDark = "#242526",
+          vscCursorLight = "#bbbebf",
+          vscSelection = "#276782",
+          vscLineNumber = "#858889",
+          vscContext = "#343536",
+          vscContextCurrent = "#838485",
+          vscGitAdded = "#72c892",
+          vscGitModified = "#0078d4",
+          vscGitDeleted = "#f28772",
+        },
+        group_overrides = {
+          -- No bg so line numbers take the window's bg (e.g. the harpoon float).
+          LineNr = { fg = "#858889", bg = "NONE" },
+          CursorLineNr = { fg = "#bbbebf", bg = "NONE" },
+          StatusLine = { fg = "#8c8c8c", bg = "#191a1b" },
+          StatusLineNC = { fg = "#8c8c8c", bg = "#191a1b" },
+          WinSeparator = { fg = "#2a2b2c", bg = "NONE" },
+          FloatBorder = { fg = "#2a2b2c", bg = "#202122" },
+          FloatTitle = { fg = "#bfbfbf", bg = "#202122", bold = true },
+          Pmenu = { fg = "#bfbfbf", bg = "#202122" },
+          PmenuSel = { fg = "#ffffff", bg = "#297aa0" },
+          -- Dark 2026 charts.yellow; Snacks explorer folder icons and names use it.
+          Directory = { fg = "#e0b97f" },
+          HarpoonFilename = { fg = "#e0b97f" },
         },
       })
 
-      vim.cmd.colorscheme("rose-pine")
-
-      local palette = require("rose-pine.palette")
-      local elements = {
-        "Normal",
-        "NonText",
-        "NormalNC",
-        "StatusLineNC",
-        "VertSplit",
-        "WinSeparator",
-        "HarpoonWindow",
-        "NormalFloat",
-        "FloatBorder",
-        "Pmenu",
-        "PmenuSel",
-        "StatusLine",
-        "EndOfBuffer",
-        "LineNr",
-      }
-
-      for _, element in ipairs(elements) do
-        vim.api.nvim_set_hl(0, element, { bg = "NONE", ctermbg = "NONE" })
-      end
-
-      vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = palette.subtle })
-      vim.api.nvim_set_hl(0, "LineNr", { fg = palette.subtle, bg = "NONE", ctermfg = 240, ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "NonText", { fg = palette.muted, bg = "NONE", ctermfg = 238, ctermbg = "NONE" })
-      vim.api.nvim_set_hl(0, "EndOfBuffer", { fg = palette.muted, bg = "NONE", ctermfg = 238, ctermbg = "NONE" })
+      vim.cmd.colorscheme("vscode")
     end,
   },
 }

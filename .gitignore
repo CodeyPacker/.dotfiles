@@ -15,3 +15,8 @@ herdr/.plugins.lock
 herdr/*.log
 herdr/session.json
 herdr/sessions/
+
+# VS Code extension build output
+vscode/harpoon/node_modules/
+vscode/harpoon/out/
+vscode/harpoon/*.vsix

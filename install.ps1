@@ -237,6 +237,12 @@ $promptPath = Join-Path $promptRoot "sr_opus_5_system_prompt.md"
 Set-DirectoryJunction -Source $promptRoot -Target (Join-Path $HOME ".config\ai-prompts")
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".claude\CLAUDE.md")
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".codex\AGENTS.md")
+
+$vscodeRoot = Join-Path $dotfilesRoot "vscode"
+$vscodeUser = Join-Path $env:APPDATA "Code\User"
+Set-FileSymbolicLink -Source (Join-Path $vscodeRoot "settings.json") -Target (Join-Path $vscodeUser "settings.json")
+Set-FileSymbolicLink -Source (Join-Path $vscodeRoot "keybindings.json") -Target (Join-Path $vscodeUser "keybindings.json")
+
 Set-PowerShellLoader
 
 Write-Host ""

@@ -1,0 +1,52 @@
+[
+    {
+        "key": "ctrl+n",
+        "command": "workbench.action.quickOpenSelectNext",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "ctrl+p",
+        "command": "workbench.action.quickOpenSelectPrevious",
+        "when": "inQuickOpen"
+    },
+    {
+        "key": "enter",
+        "command": "harpoon.open",
+        "when": "editorTextFocus && resourceFilename == harpoon-marks"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.action.toggleSidebarVisibility",
+        "when": "explorerViewletFocus"
+    },
+    {
+        "key": "ctrl+h",
+        "command": "workbench.files.action.focusFilesExplorer",
+        "when": "!explorerViewletFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.closePanel",
+        "when": "terminalFocus"
+    },
+    {
+        "key": "ctrl+j",
+        "command": "workbench.action.terminal.focus",
+        "when": "!terminalFocus"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "workbench.action.closeAuxiliaryBar",
+        "when": "auxiliaryBarVisible"
+    },
+    {
+        "key": "ctrl+l",
+        "command": "claudeVSCodeSidebarSecondary.focus",
+        "when": "!auxiliaryBarVisible"
+    },
+    {
+        "key": "ctrl+x",
+        "command": "workbench.action.closeActiveEditor",
+        "when": "editorTextFocus"
+    }
+]

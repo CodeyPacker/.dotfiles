@@ -24,5 +24,8 @@ workspace_picker = "prefix+w"
 goto             = "prefix+g"
 copy_mode  = "prefix+y"
 
+navigate_workspace_up   = "k"
+navigate_workspace_down = "j"
+
 [ui]
 agent_panel_sort = "spaces"

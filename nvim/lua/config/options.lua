@@ -8,3 +8,5 @@ opt.shiftwidth = 2
 opt.number = true
 opt.clipboard = "unnamedplus"
 opt.mouse = "a"
+opt.wrap = false
+opt.cursorline = true

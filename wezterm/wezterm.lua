@@ -5,10 +5,18 @@ local target = wezterm.target_triple
 local is_macos = target:find("apple%-darwin") ~= nil
 local is_windows = target:find("windows") ~= nil
 
-config.color_scheme = "rose-pine-moon"
-config.font = wezterm.font("Hack Nerd Font")
-config.font_size = 15.0
-config.window_background_opacity = 1 
+-- Match VS Code's default editor font per platform. Nerd Font icons fall
+-- back to WezTerm's bundled Symbols Nerd Font.
+if is_windows then
+  config.font = wezterm.font("Consolas")
+elseif is_macos then
+  config.font = wezterm.font("Menlo")
+else
+  config.font = wezterm.font("Droid Sans Mono")
+end
+-- VS Code's 14px default; WezTerm sizes in points (14px = 10.5pt at 96 DPI).
+config.font_size = 10.5
+config.window_background_opacity = 1
 config.hide_tab_bar_if_only_one_tab = true
 
 -- The fancy tab bar renders as part of the OS title bar (window_frame
@@ -17,16 +25,26 @@ config.hide_tab_bar_if_only_one_tab = true
 -- the window surface instead and does respect it.
 config.use_fancy_tab_bar = false
 
--- Match the tab bar to the pane background instead of the opaque bar the
--- rose-pine-moon scheme draws by default.
+-- VS Code "Dark 2026" integrated terminal colors (ANSI values are VS Code's
+-- built-in terminal defaults, which the theme does not override).
 config.colors = {
+  foreground = "#cccccc",
+  background = "#191a1b",
+  cursor_bg = "#bfbfbf",
+  cursor_fg = "#191a1b",
+  cursor_border = "#bfbfbf",
+  selection_bg = "#264352",
+  selection_fg = "none",
+  split = "#2a2b2c",
+  ansi = { "#000000", "#cd3131", "#0dbc79", "#e5e510", "#2472c8", "#bc3fbc", "#11a8cd", "#e5e5e5" },
+  brights = { "#666666", "#f14c4c", "#23d18b", "#f5f543", "#3b8eea", "#d670d6", "#29b8db", "#e5e5e5" },
   tab_bar = {
     background = "rgba(0, 0, 0, 0)",
-    active_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
-    inactive_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#908caa" },
-    inactive_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
-    new_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#908caa" },
-    new_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#e0def4" },
+    active_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
+    inactive_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#8c8c8c" },
+    inactive_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
+    new_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#8c8c8c" },
+    new_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
   },
 }
 

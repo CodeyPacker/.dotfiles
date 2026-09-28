@@ -1,0 +1,61 @@
+{
+  "name": "harpoon",
+  "displayName": "Harpoon",
+  "description": "Mark files and jump between them from an editable buffer.",
+  "publisher": "codyp",
+  "version": "0.4.0",
+  "private": true,
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "harpoon.mark",
+        "title": "Harpoon: Mark File"
+      },
+      {
+        "command": "harpoon.menu",
+        "title": "Harpoon: Toggle Menu"
+      },
+      {
+        "command": "harpoon.open",
+        "title": "Harpoon: Open File At Cursor"
+      }
+    ],
+    "keybindings": [
+      {
+        "key": "enter",
+        "command": "harpoon.open",
+        "when": "editorTextFocus && resourceFilename == harpoon-marks"
+      }
+    ],
+    "colors": [
+      {
+        "id": "harpoon.fileName",
+        "description": "File name color in the Harpoon mark list.",
+        "defaults": {
+          "dark": "#EA9D34",
+          "light": "#9C6F15",
+          "highContrast": "#F6C177",
+          "highContrastLight": "#7A5510"
+        }
+      }
+    ]
+  },
+  "scripts": {
+    "compile": "tsc -p .",
+    "package": "vsce package --allow-missing-repository"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^3.2.0",
+    "typescript": "^5.4.0"
+  }
+}
