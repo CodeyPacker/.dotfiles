@@ -1,34 +1,53 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
 add_newline = true
-format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
+format = "$directory$git_branch$git_status$cmd_duration$status$line_break$character"
 palette = "preview"
 
 [character]
 success_symbol = "[❯](bold violet)"
 error_symbol = "[❯](bold danger)"
-vicmd_symbol = "[❮](bold info)"
+vimcmd_symbol = "[❮](bold info)"
 
 [directory]
-format = "[$path]($style)[$read_only]($read_only_style) "
+format = "[ $path ]($style)([ $read_only ]($read_only_style)) "
 truncation_length = 4
-style = "bold ink"
-read_only_style = "danger"
+style = "bold fg:ink bg:surface"
+read_only = "read only"
+read_only_style = "fg:danger bg:danger_bg"
 
 [git_branch]
-format = "[on](muted) [$branch]($style) "
-style = "bold violet"
+format = "[ $branch ]($style) "
+style = "bold fg:violet bg:violet_bg"
 
 [git_status]
-format = "([$all_status$ahead_behind]($style) )"
-style = "warning"
+format = "$all_status$ahead_behind"
+conflicted = '[ $count conflict ](fg:danger bg:danger_bg) '
+modified = '[ $count modified ](fg:warning bg:warning_bg) '
+staged = '[ $count staged ](fg:warning bg:warning_bg) '
+untracked = '[ $count untracked ](fg:warning bg:warning_bg) '
+deleted = '[ $count deleted ](fg:danger bg:danger_bg) '
+renamed = '[ $count renamed ](fg:warning bg:warning_bg) '
+typechanged = '[ $count type changed ](fg:warning bg:warning_bg) '
+stashed = '[ $count stashed ](fg:info bg:info_bg) '
+ahead = '[ $count ahead ](fg:info bg:info_bg) '
+behind = '[ $count behind ](fg:warning bg:warning_bg) '
+diverged = '[ $ahead_count ahead · $behind_count behind ](fg:warning bg:warning_bg) '
 
 [cmd_duration]
 min_time = 2000
-format = "[took](muted) [$duration]($style) "
-style = "info"
+format = "[ $duration ]($style) "
+style = "fg:info bg:info_bg"
 
-# PReview Design System dark text and status colors.
+[status]
+disabled = false
+format = "[ $symbol ]($style) "
+success_symbol = "✓ clean exit"
+symbol = "command failed"
+success_style = "fg:success bg:success_bg"
+failure_style = "fg:danger bg:danger_bg"
+
+# PReview Design System dark surfaces, text, and status colors.
 [palettes.preview]
 ink = "#f4f3f9"
 muted = "#aba8bd"
@@ -36,3 +55,10 @@ violet = "#b5a6ff"
 danger = "#ff7b7f"
 warning = "#f8c15a"
 info = "#86afff"
+surface = "#262433"
+violet_bg = "#2b2452"
+danger_bg = "#3a171b"
+warning_bg = "#3a2a0e"
+info_bg = "#15264a"
+success = "#45d69a"
+success_bg = "#10301f"
