@@ -1,36 +1,64 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
-add_newline = false
-format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
-palette = "rose_pine_moon"
+add_newline = true
+format = "$directory$git_branch$git_status$cmd_duration$status$line_break$character"
+palette = "preview"
 
 [character]
-success_symbol = "[❯](iris)"
-error_symbol = "[❯](love)"
-vicmd_symbol = "[❮](foam)"
-
-[cmd_duration]
-format = "[$duration]($style) "
-style = "foam"
+success_symbol = "[❯](bold violet)"
+error_symbol = "[❯](bold danger)"
+vimcmd_symbol = "[❮](bold info)"
 
 [directory]
+format = "[ $path ]($style)([ $read_only ]($read_only_style)) "
 truncation_length = 4
-style = "bold foam"
+style = "bold fg:ink bg:surface"
+read_only = "read only"
+read_only_style = "fg:danger bg:danger_bg"
 
 [git_branch]
-format = "on [$branch]($style) "
-style = "bold iris"
+format = "[ $branch ]($style) "
+style = "bold fg:violet bg:violet_bg"
 
-[palettes.rose_pine_moon]
-base = "#232136"
-surface = "#2a273f"
-overlay = "#393552"
-muted = "#6e6a86"
-subtle = "#908caa"
-text = "#e0def4"
-love = "#eb6f92"
-gold = "#f6c177"
-rose = "#ea9a97"
-pine = "#3e8fb0"
-foam = "#9ccfd8"
-iris = "#c4a7e7"
+[git_status]
+format = "$all_status$ahead_behind"
+conflicted = '[ $count conflict ](fg:danger bg:danger_bg) '
+modified = '[ $count modified ](fg:warning bg:warning_bg) '
+staged = '[ $count staged ](fg:warning bg:warning_bg) '
+untracked = '[ $count untracked ](fg:warning bg:warning_bg) '
+deleted = '[ $count deleted ](fg:danger bg:danger_bg) '
+renamed = '[ $count renamed ](fg:warning bg:warning_bg) '
+typechanged = '[ $count type changed ](fg:warning bg:warning_bg) '
+stashed = '[ $count stashed ](fg:info bg:info_bg) '
+ahead = '[ $count ahead ](fg:info bg:info_bg) '
+behind = '[ $count behind ](fg:warning bg:warning_bg) '
+diverged = '[ $ahead_count ahead · $behind_count behind ](fg:warning bg:warning_bg) '
+
+[cmd_duration]
+min_time = 2000
+format = "[ $duration ]($style) "
+style = "fg:info bg:info_bg"
+
+[status]
+disabled = false
+format = "[ $symbol ]($style) "
+success_symbol = "✓ clean exit"
+symbol = "command failed"
+success_style = "fg:success bg:success_bg"
+failure_style = "fg:danger bg:danger_bg"
+
+# PReview Design System dark surfaces, text, and status colors.
+[palettes.preview]
+ink = "#f4f3f9"
+muted = "#aba8bd"
+violet = "#b5a6ff"
+danger = "#ff7b7f"
+warning = "#f8c15a"
+info = "#86afff"
+surface = "#262433"
+violet_bg = "#2b2452"
+danger_bg = "#3a171b"
+warning_bg = "#3a2a0e"
+info_bg = "#15264a"
+success = "#45d69a"
+success_bg = "#10301f"

@@ -5,53 +5,80 @@ local target = wezterm.target_triple
 local is_macos = target:find("apple%-darwin") ~= nil
 local is_windows = target:find("windows") ~= nil
 
--- Match VS Code's default editor font per platform. Nerd Font icons fall
+-- Use platform monospace fonts. Nerd Font icons fall
 -- back to WezTerm's bundled Symbols Nerd Font. On Windows, install.ps1's
 -- Hack Nerd Font comes first because the bundled one lacks newer icons.
 if is_windows then
   config.font = wezterm.font_with_fallback({ "Consolas", "Hack Nerd Font" })
 elseif is_macos then
-  config.font = wezterm.font("Menlo")
+  config.font = wezterm.font_with_fallback({ "SF Mono", "Menlo" })
 else
   config.font = wezterm.font("Droid Sans Mono")
 end
 -- VS Code's 14px default; WezTerm sizes in points (14px = 10.5pt at 96 DPI).
 config.font_size = 10.5
-config.window_background_opacity = 1
+-- PReview Design System, dark palette:
+-- https://claude.ai/artifact/3LLZ9hkaos5DgLxBP7bMca
+config.window_background_opacity = 0.94
+config.window_padding = { left = 20, right = 20, top = 16, bottom = 16 }
 config.hide_tab_bar_if_only_one_tab = true
+config.use_fancy_tab_bar = true
 
--- The fancy tab bar renders as part of the OS title bar (window_frame
--- colors) and ignores window_background_opacity, so it stays opaque no
--- matter what colors.tab_bar below says. The retro tab bar is drawn inside
--- the window surface instead and does respect it.
-config.use_fancy_tab_bar = false
+-- Keep native title-bar controls with the same quiet surface as the tabs.
+config.window_frame = {
+  active_titlebar_bg = "#1b1a24", -- surface-solid
+  inactive_titlebar_bg = "#14131b", -- surface-sunken
+  active_titlebar_fg = "#f4f3f9", -- ink
+  inactive_titlebar_fg = "#aba8bd", -- ink-secondary
+}
 
--- VS Code "Dark 2026" integrated terminal colors (ANSI values are VS Code's
--- built-in terminal defaults, which the theme does not override).
 config.colors = {
-  foreground = "#cccccc",
-  background = "#191a1b",
-  cursor_bg = "#bfbfbf",
-  cursor_fg = "#191a1b",
-  cursor_border = "#bfbfbf",
-  selection_bg = "#264352",
-  selection_fg = "none",
-  split = "#2a2b2c",
-  ansi = { "#000000", "#cd3131", "#0dbc79", "#e5e510", "#2472c8", "#bc3fbc", "#11a8cd", "#e5e5e5" },
-  brights = { "#666666", "#f14c4c", "#23d18b", "#f5f543", "#3b8eea", "#d670d6", "#29b8db", "#e5e5e5" },
+  foreground = "#f4f3f9", -- ink
+  background = "#1b1a24", -- surface-solid
+  cursor_bg = "#9c88ff", -- focus-ring
+  cursor_fg = "#16141f", -- ink-inverse
+  cursor_border = "#9c88ff",
+  selection_bg = "#2b2452", -- accent-soft
+  selection_fg = "#f4f3f9",
+  split = "#4e3fa3", -- accent-border
+  scrollbar_thumb = "#4e3fa3",
+  compose_cursor = "#f8c15a", -- warning
+  -- Standard ANSI roles use the design's status colors. Bright variants use
+  -- its syntax colors, keeping red/green diff output and blue links familiar.
+  ansi = {
+    "#14131b", "#ff7b7f", "#45d69a", "#f8c15a",
+    "#86afff", "#b5a6ff", "#5fd3b0", "#aba8bd",
+  },
+  brights = {
+    "#8c89a0", "#ff9c8f", "#45d69a", "#f8c15a",
+    "#8fb0ff", "#c4a7ff", "#6cc4ff", "#f4f3f9",
+  },
   tab_bar = {
-    background = "rgba(0, 0, 0, 0)",
-    active_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
-    inactive_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#8c8c8c" },
-    inactive_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
-    new_tab = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#8c8c8c" },
-    new_tab_hover = { bg_color = "rgba(0, 0, 0, 0)", fg_color = "#bfbfbf" },
+    background = "#0e0d14", -- canvas
+    active_tab = { bg_color = "#29234a", fg_color = "#b5a6ff" },
+    inactive_tab = { bg_color = "#1b1a24", fg_color = "#aba8bd" },
+    inactive_tab_hover = { bg_color = "#2a2837", fg_color = "#f4f3f9" },
+    new_tab = { bg_color = "#0e0d14", fg_color = "#aba8bd" },
+    new_tab_hover = { bg_color = "#2b2452", fg_color = "#b5a6ff" },
   },
 }
 
 if is_macos then
-  config.font_dirs = { wezterm.home_dir .. "/Library/Fonts" }
-  config.macos_window_background_blur = 50
+  config.font_dirs = {
+    wezterm.home_dir .. "/Library/Fonts",
+    "/System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts",
+  }
+  config.font_size = 12
+  config.line_height = 1.15
+  config.default_cursor_style = "SteadyBar"
+  config.window_background_opacity = 0.85
+  config.macos_window_background_blur = 40
+  config.window_padding = { left = 24, right = 24, top = 20, bottom = 20 }
+  -- A single toolbar keeps the traffic lights alongside the tabs.
+  config.window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_FORCE_ENABLE_SHADOW"
+  config.hide_tab_bar_if_only_one_tab = false
+  config.window_frame.font = wezterm.font("Helvetica Neue", { weight = "Medium" })
+  config.window_frame.font_size = 12
 elseif is_windows then
   -- Without this, WezTerm falls back to %COMSPEC% (cmd.exe) when no WSL
   -- domain is available, which has none of the dotfiles aliases/profile
@@ -59,9 +86,8 @@ elseif is_windows then
   config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
 
--- The OS title bar (window_decorations defaults to "TITLE|RESIZE") already
--- gives native drag-by-titlebar and the min/max/close buttons. This extra
--- binding lets you also drag by holding Ctrl+Shift anywhere in the pane.
+-- Drag by holding Ctrl+Shift anywhere in the pane, in addition to the
+-- title bar or integrated tab bar.
 --
 -- It has to fire on *Down* rather than WezTerm's built-in Drag-based
 -- CTRL-SHIFT+drag binding, because tmux (mouse on) and other
@@ -149,34 +175,9 @@ wezterm.on("gui-startup", function(cmd)
   )
 end)
 
--- Shrink the font while nvim is the foreground process in the active pane,
--- then restore it once nvim exits. Captured after profile/local overlays run
--- so it reflects whatever font_size they may have set.
-local DEFAULT_FONT_SIZE = config.font_size
-local NVIM_FONT_SIZE = DEFAULT_FONT_SIZE - 2
-
-local function is_nvim(process_name)
-  if not process_name then
-    return false
-  end
-  return process_name:find("[/\\]nvim%.?e?x?e?$") ~= nil
-end
-
-wezterm.on("update-status", function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local target_size = is_nvim(pane:get_foreground_process_name()) and NVIM_FONT_SIZE or nil
-
-  if overrides.font_size == target_size then
-    return
-  end
-
-  overrides.font_size = target_size
-  window:set_config_overrides(overrides)
-end)
-
 -- Dim unfocused windows so the active workspace stays visually obvious.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
-local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.9
+local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = math.min(config.window_background_opacity, 0.9)
 
 local function same_text_hsb(actual, expected)
   if actual == nil or expected == nil then
