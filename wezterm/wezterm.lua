@@ -5,13 +5,13 @@ local target = wezterm.target_triple
 local is_macos = target:find("apple%-darwin") ~= nil
 local is_windows = target:find("windows") ~= nil
 
--- Match VS Code's default editor font per platform. Nerd Font icons fall
+-- Use platform monospace fonts. Nerd Font icons fall
 -- back to WezTerm's bundled Symbols Nerd Font. On Windows, install.ps1's
 -- Hack Nerd Font comes first because the bundled one lacks newer icons.
 if is_windows then
   config.font = wezterm.font_with_fallback({ "Consolas", "Hack Nerd Font" })
 elseif is_macos then
-  config.font = wezterm.font("Menlo")
+  config.font = wezterm.font_with_fallback({ "SF Mono", "Menlo" })
 else
   config.font = wezterm.font("Droid Sans Mono")
 end
@@ -64,8 +64,21 @@ config.colors = {
 }
 
 if is_macos then
-  config.font_dirs = { wezterm.home_dir .. "/Library/Fonts" }
-  config.macos_window_background_blur = 50
+  config.font_dirs = {
+    wezterm.home_dir .. "/Library/Fonts",
+    "/System/Applications/Utilities/Terminal.app/Contents/Resources/Fonts",
+  }
+  config.font_size = 12
+  config.line_height = 1.15
+  config.default_cursor_style = "SteadyBar"
+  config.window_background_opacity = 0.85
+  config.macos_window_background_blur = 40
+  config.window_padding = { left = 24, right = 24, top = 20, bottom = 20 }
+  -- A single toolbar keeps the traffic lights alongside the tabs.
+  config.window_decorations = "INTEGRATED_BUTTONS|RESIZE|MACOS_FORCE_ENABLE_SHADOW"
+  config.hide_tab_bar_if_only_one_tab = false
+  config.window_frame.font = wezterm.font("Helvetica Neue", { weight = "Medium" })
+  config.window_frame.font_size = 12
 elseif is_windows then
   -- Without this, WezTerm falls back to %COMSPEC% (cmd.exe) when no WSL
   -- domain is available, which has none of the dotfiles aliases/profile
@@ -73,9 +86,8 @@ elseif is_windows then
   config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
 
--- The OS title bar (window_decorations defaults to "TITLE|RESIZE") already
--- gives native drag-by-titlebar and the min/max/close buttons. This extra
--- binding lets you also drag by holding Ctrl+Shift anywhere in the pane.
+-- Drag by holding Ctrl+Shift anywhere in the pane, in addition to the
+-- title bar or integrated tab bar.
 --
 -- It has to fire on *Down* rather than WezTerm's built-in Drag-based
 -- CTRL-SHIFT+drag binding, because tmux (mouse on) and other
@@ -190,7 +202,7 @@ end)
 
 -- Dim unfocused windows so the active workspace stays visually obvious.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
-local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = 0.9
+local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = math.min(config.window_background_opacity, 0.9)
 
 local function same_text_hsb(actual, expected)
   if actual == nil or expected == nil then
