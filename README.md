@@ -62,18 +62,6 @@ cd ~/.dotfiles
 Keeping Linux projects and the WSL clone under the Linux home directory avoids the
 filesystem overhead of developing under `/mnt/c`.
 
-## Future work Windows installation
-
-Once the work machine arrives, start with the policy-safe profile:
-
-```powershell
-.\install.ps1 -Profile work-windows -SkipPackages
-```
-
-Then add only company-approved settings to
-`wezterm/profiles/work-windows.lua`. Keep company paths, credentials, certificates,
-and private aliases in the machine-local override files instead of Git.
-
 ## Machine-local overrides
 
 Copy only the examples you need:
