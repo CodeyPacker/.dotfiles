@@ -1,36 +1,38 @@
 "$schema" = "https://starship.rs/config-schema.json"
 
-add_newline = false
+add_newline = true
 format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
-palette = "rose_pine_moon"
+palette = "preview"
 
 [character]
-success_symbol = "[❯](iris)"
-error_symbol = "[❯](love)"
-vicmd_symbol = "[❮](foam)"
-
-[cmd_duration]
-format = "[$duration]($style) "
-style = "foam"
+success_symbol = "[❯](bold violet)"
+error_symbol = "[❯](bold danger)"
+vicmd_symbol = "[❮](bold info)"
 
 [directory]
+format = "[$path]($style)[$read_only]($read_only_style) "
 truncation_length = 4
-style = "bold foam"
+style = "bold ink"
+read_only_style = "danger"
 
 [git_branch]
-format = "on [$branch]($style) "
-style = "bold iris"
+format = "[on](muted) [$branch]($style) "
+style = "bold violet"
 
-[palettes.rose_pine_moon]
-base = "#232136"
-surface = "#2a273f"
-overlay = "#393552"
-muted = "#6e6a86"
-subtle = "#908caa"
-text = "#e0def4"
-love = "#eb6f92"
-gold = "#f6c177"
-rose = "#ea9a97"
-pine = "#3e8fb0"
-foam = "#9ccfd8"
-iris = "#c4a7e7"
+[git_status]
+format = "([$all_status$ahead_behind]($style) )"
+style = "warning"
+
+[cmd_duration]
+min_time = 2000
+format = "[took](muted) [$duration]($style) "
+style = "info"
+
+# PReview Design System dark text and status colors.
+[palettes.preview]
+ink = "#f4f3f9"
+muted = "#aba8bd"
+violet = "#b5a6ff"
+danger = "#ff7b7f"
+warning = "#f8c15a"
+info = "#86afff"
