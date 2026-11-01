@@ -237,6 +237,7 @@ $promptPath = Join-Path $promptRoot "sr_opus_5_system_prompt.md"
 Set-DirectoryJunction -Source $promptRoot -Target (Join-Path $HOME ".config\ai-prompts")
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".claude\CLAUDE.md")
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".codex\AGENTS.md")
+Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "ai\skills\tour") -Target (Join-Path $HOME ".claude\skills\tour")
 
 $vscodeRoot = Join-Path $dotfilesRoot "vscode"
 $vscodeUser = Join-Path $env:APPDATA "Code\User"

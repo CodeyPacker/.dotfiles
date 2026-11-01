@@ -83,6 +83,7 @@ link_path "$DOTFILES_ROOT/starship/starship.toml" "$HOME/.config/starship.toml"
 link_path "$DOTFILES_ROOT/ai/prompts" "$HOME/.config/ai-prompts"
 link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.claude/CLAUDE.md"
 link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.codex/AGENTS.md"
+link_path "$DOTFILES_ROOT/ai/skills/tour" "$HOME/.claude/skills/tour"
 
 # The aliases, prompt, and tmux config all assume Zsh, so make it the login
 # shell instead of CachyOS's default fish.
