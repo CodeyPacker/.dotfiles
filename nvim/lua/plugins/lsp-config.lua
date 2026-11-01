@@ -7,7 +7,6 @@ local ensured_servers = {
   "jsonls",
   "html",
   "cssls",
-  "graphql",
   -- Shell and config
   "lua_ls",
   "bashls",
@@ -33,7 +32,6 @@ local servers = {
   jsonls = {},
   html = {},
   cssls = {},
-  graphql = {},
   bashls = {},
   dotls = {},
   gopls = {},

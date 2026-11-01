@@ -6,9 +6,10 @@ local is_macos = target:find("apple%-darwin") ~= nil
 local is_windows = target:find("windows") ~= nil
 
 -- Match VS Code's default editor font per platform. Nerd Font icons fall
--- back to WezTerm's bundled Symbols Nerd Font.
+-- back to WezTerm's bundled Symbols Nerd Font. On Windows, install.ps1's
+-- Hack Nerd Font comes first because the bundled one lacks newer icons.
 if is_windows then
-  config.font = wezterm.font("Consolas")
+  config.font = wezterm.font_with_fallback({ "Consolas", "Hack Nerd Font" })
 elseif is_macos then
   config.font = wezterm.font("Menlo")
 else
