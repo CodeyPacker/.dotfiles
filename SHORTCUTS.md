@@ -24,6 +24,23 @@ This file is the canonical shortcut reference for this repo. Keep it in sync wit
 - `<leader>fp`: list projects
 - `<leader>fc`: find files in the Neovim config directory
 
+## Find And Replace In Files
+
+Opens in a float, prefilled with the selection or word under the cursor. Defaults to literal, case-insensitive search like VS Code.
+
+- `Cmd+Shift+F`: find in files
+- `Cmd+Shift+H`: replace in files
+- `Alt+C` / `Alt+W` / `Alt+R`: toggle match case / whole word / regex
+- `Alt+P`: toggle preserve case
+- `Alt+Enter`: replace all
+- `R` on a result: replace in that file and remove it from the list
+- `X` on a result: skip that file without changing it
+- `]]` / `[[`: jump to the next / previous file
+- `Enter` on a result: open it and hide the float
+- `q` or `Esc`: hide the float (reopen keeps your search)
+- `Tab` / `Shift+Tab`: next / previous field
+- `g?`: all grug-far actions
+
 ## Explorer, Notes, And Marks
 
 - `<leader>b`: toggle the file explorer

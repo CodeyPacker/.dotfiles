@@ -86,6 +86,17 @@ elseif is_windows then
   config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
 
+-- VS Code's Cmd+Shift+F/H. Terminals can't pass Cmd through to Neovim, so
+-- send Alt+Shift+F/H, which Neovim maps to project find/replace.
+config.keys = config.keys or {}
+for _, key in ipairs({ "f", "h" }) do
+  table.insert(config.keys, {
+    key = key,
+    mods = "SUPER|SHIFT",
+    action = wezterm.action.SendKey({ key = key:upper(), mods = "ALT" }),
+  })
+end
+
 -- Drag by holding Ctrl+Shift anywhere in the pane, in addition to the
 -- title bar or integrated tab bar.
 --
