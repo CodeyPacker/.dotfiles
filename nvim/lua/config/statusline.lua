@@ -1,4 +1,12 @@
 local M = {}
+local diagnostic_counts = {}
+
+local function diagnostics(bufnr)
+  if not diagnostic_counts[bufnr] then
+    diagnostic_counts[bufnr] = vim.diagnostic.count(bufnr)
+  end
+  return diagnostic_counts[bufnr]
+end
 
 local function tag(group, text)
   return "%#Preview" .. group .. "# " .. text .. " %#StatusLine# "
@@ -27,8 +35,9 @@ function M.render()
     parts[#parts + 1] = tag("Warning", "read only")
   end
 
-  local errors = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-  local warnings = #vim.diagnostic.get(0, { severity = vim.diagnostic.severity.WARN })
+  local counts = diagnostics(vim.api.nvim_get_current_buf())
+  local errors = counts[vim.diagnostic.severity.ERROR] or 0
+  local warnings = counts[vim.diagnostic.severity.WARN] or 0
   if errors > 0 then
     parts[#parts + 1] = tag("Error", errors .. (errors == 1 and " error" or " errors"))
   end
@@ -44,6 +53,21 @@ function M.render()
 end
 
 function M.setup()
+  diagnostic_counts = {}
+  local group = vim.api.nvim_create_augroup("PreviewStatusline", { clear = true })
+  vim.api.nvim_create_autocmd("DiagnosticChanged", {
+    group = group,
+    callback = function(args)
+      diagnostic_counts[args.buf] = vim.diagnostic.count(args.buf)
+      vim.cmd.redrawstatus()
+    end,
+  })
+  vim.api.nvim_create_autocmd("BufWipeout", {
+    group = group,
+    callback = function(args)
+      diagnostic_counts[args.buf] = nil
+    end,
+  })
   vim.opt.termguicolors = true
   vim.opt.laststatus = 3
   vim.opt.showmode = false

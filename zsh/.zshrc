@@ -1,3 +1,4 @@
+typeset -U path fpath
 export PATH="/usr/local/bin:$HOME/.local/bin:$HOME/go/bin:$PATH"
 export ZSH="$HOME/.oh-my-zsh"
 export EDITOR="nvim"
@@ -12,7 +13,8 @@ if [[ -z "${DOTFILES_ROOT:-}" ]]; then
 fi
 
 if command -v brew >/dev/null 2>&1; then
-  brew_prefix="$(brew --prefix)"
+  brew_prefix="${HOMEBREW_PREFIX:-$(brew --prefix)}"
+  export HOMEBREW_PREFIX="$brew_prefix"
   fpath=("$brew_prefix/share/zsh-completions" $fpath)
 
   autosuggestions="$brew_prefix/share/zsh-autosuggestions/zsh-autosuggestions.zsh"
@@ -23,6 +25,11 @@ if command -v brew >/dev/null 2>&1; then
 elif [[ -r /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh ]]; then
   source /usr/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 fi
+
+# Load Node's version manager on first use instead of every shell startup.
+# Neovim also triggers it so its language servers inherit the Node version.
+zstyle ':omz:plugins:nvm' lazy yes
+zstyle ':omz:plugins:nvm' lazy-cmd nvim
 
 plugins=(git nvm brew z)
 [[ -r "$ZSH/oh-my-zsh.sh" ]] && source "$ZSH/oh-my-zsh.sh"
