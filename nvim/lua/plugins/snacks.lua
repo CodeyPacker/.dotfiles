@@ -74,7 +74,6 @@ return {
   config = function(_, opts)
     require("snacks").setup(opts)
 
-    vim.api.nvim_set_hl(0, "SnacksPickerDir", { fg = "#8c8c8c" })
   end,
   keys = {
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },

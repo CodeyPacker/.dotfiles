@@ -175,31 +175,6 @@ wezterm.on("gui-startup", function(cmd)
   )
 end)
 
--- Shrink the font while nvim is the foreground process in the active pane,
--- then restore it once nvim exits. Captured after profile/local overlays run
--- so it reflects whatever font_size they may have set.
-local DEFAULT_FONT_SIZE = config.font_size
-local NVIM_FONT_SIZE = DEFAULT_FONT_SIZE - 2
-
-local function is_nvim(process_name)
-  if not process_name then
-    return false
-  end
-  return process_name:find("[/\\]nvim%.?e?x?e?$") ~= nil
-end
-
-wezterm.on("update-status", function(window, pane)
-  local overrides = window:get_config_overrides() or {}
-  local target_size = is_nvim(pane:get_foreground_process_name()) and NVIM_FONT_SIZE or nil
-
-  if overrides.font_size == target_size then
-    return
-  end
-
-  overrides.font_size = target_size
-  window:set_config_overrides(overrides)
-end)
-
 -- Dim unfocused windows so the active workspace stays visually obvious.
 local UNFOCUSED_FOREGROUND_TEXT_HSB = { hue = 1.0, saturation = 0.25, brightness = 0.45 }
 local UNFOCUSED_WINDOW_BACKGROUND_OPACITY = math.min(config.window_background_opacity, 0.9)

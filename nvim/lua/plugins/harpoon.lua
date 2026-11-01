@@ -46,8 +46,8 @@ return {
       "<leader>e",
       function()
         local harpoon = require("harpoon")
-        -- Blank border chars hide the border but keep room for the title.
-        harpoon.ui:toggle_quick_menu(harpoon:list(), { border = { " ", " ", " ", " ", " ", " ", " ", " " } })
+        -- Use the same rounded panel border as other floating menus.
+        harpoon.ui:toggle_quick_menu(harpoon:list(), { border = "rounded" })
       end,
       desc = "Show Marked Files",
     },
