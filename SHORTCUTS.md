@@ -90,3 +90,5 @@ Opens in a float, prefilled with the selection or word under the cursor. Default
 
 - `Tab` does not accept Copilot suggestions in this config.
 - `OverseerQuickAction` exists as a command but is not mapped to a key.
+
+<!-- dummy PR test change -->
