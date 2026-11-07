@@ -15,8 +15,13 @@ herdr/.plugins.lock
 herdr/*.log
 herdr/session.json
 herdr/sessions/
+herdr/picker/*.exe
 
 # VS Code extension build output
 vscode/harpoon/node_modules/
 vscode/harpoon/out/
 vscode/harpoon/*.vsix
+
+# Herdr app rewrites its shipped themes on every start.
+herdr-app/themes/atom-one-dark.json
+herdr-app/themes/win98.json

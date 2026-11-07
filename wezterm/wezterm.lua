@@ -80,19 +80,30 @@ if is_macos then
   config.window_frame.font = wezterm.font("Helvetica Neue", { weight = "Medium" })
   config.window_frame.font_size = 12
 elseif is_windows then
+  -- Match the macOS look: Acrylic stands in for the macOS blur, and Segoe UI
+  -- for Helvetica Neue. Font size stays at the shared 96-DPI value.
+  config.line_height = 1.15
+  config.default_cursor_style = "SteadyBar"
+  config.window_background_opacity = 0.85
+  config.win32_system_backdrop = "Acrylic"
+  config.window_decorations = "INTEGRATED_BUTTONS|RESIZE"
+  config.hide_tab_bar_if_only_one_tab = false
+  config.window_frame.font = wezterm.font("Segoe UI", { weight = "DemiBold" })
+  config.window_frame.font_size = 10
   -- Without this, WezTerm falls back to %COMSPEC% (cmd.exe) when no WSL
   -- domain is available, which has none of the dotfiles aliases/profile
   -- (no `ls`, no `vim`, etc). Use PowerShell 7 instead.
   config.default_prog = { "pwsh.exe", "-NoLogo" }
 end
 
--- VS Code's Cmd+Shift+F/H. Terminals can't pass Cmd through to Neovim, so
--- send Alt+Shift+F/H, which Neovim maps to project find/replace.
+-- VS Code's Cmd+Shift+F/H (Ctrl+Shift+F/H on Windows). Terminals can't pass
+-- these through to Neovim, so send Alt+Shift+F/H, which Neovim maps to
+-- project find/replace. On Windows this replaces WezTerm's Ctrl+Shift+F search.
 config.keys = config.keys or {}
 for _, key in ipairs({ "f", "h" }) do
   table.insert(config.keys, {
     key = key,
-    mods = "SUPER|SHIFT",
+    mods = is_windows and "CTRL|SHIFT" or "SUPER|SHIFT",
     action = wezterm.action.SendKey({ key = key:upper(), mods = "ALT" }),
   })
 end

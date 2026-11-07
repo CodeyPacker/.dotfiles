@@ -238,6 +238,18 @@ Set-DirectoryJunction -Source $promptRoot -Target (Join-Path $HOME ".config\ai-p
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".claude\CLAUDE.md")
 Set-FileSymbolicLink -Source $promptPath -Target (Join-Path $HOME ".codex\AGENTS.md")
 Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "ai\skills\tour") -Target (Join-Path $HOME ".claude\skills\tour")
+Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "ai\skills\herdr-background") -Target (Join-Path $HOME ".claude\skills\herdr-background")
+Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "mprocs") -Target (Join-Path $env:APPDATA "mprocs")
+# Herdr desktop app mods live in their own repo (personal/herdr-mods). The app hot
+# reloads through the junctions, so edits there show up live.
+foreach ($mod in @("jump", "run")) {
+  Set-DirectoryJunction -Source (Join-Path $HOME "personal\herdr-mods\$mod\mods\$mod") -Target (Join-Path $HOME ".config\herdr-app\mods\$mod")
+}
+# Only the themes folder. Herdr rewrites settings.json and keys.json in place, which would
+# replace a file link, so herdr-app/settings.json and keys.json are copied over by hand.
+Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "herdr-app\themes") -Target (Join-Path $HOME ".config\herdr-app\themes")
+# Only the config file. lazygit keeps its state files in the same folder.
+Set-FileSymbolicLink -Source (Join-Path $dotfilesRoot "lazygit\config.yml") -Target (Join-Path $env:LOCALAPPDATA "lazygit\config.yml")
 
 $vscodeRoot = Join-Path $dotfilesRoot "vscode"
 $vscodeUser = Join-Path $env:APPDATA "Code\User"

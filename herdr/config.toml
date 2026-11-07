@@ -3,12 +3,30 @@ onboarding = false
 [terminal]
 default_shell = "pwsh.exe"
 
-# Sidebar row highlights use surface_dim. Let the terminal background show
-# through instead of filling them with an opaque block.
+# PReview dark palette shared with WezTerm, Neovim, and the Starship prompt.
+# Backgrounds stay "reset" so WezTerm's translucent glass shows through.
 [theme.custom]
-surface_dim = "reset"
 panel_bg = "reset"
-accent = "reset"
+surface_dim = "reset"
+sidebar_bg = "reset"
+active_row_bg = "#29234a" # accent-soft, the selected tab in WezTerm
+selection_bg = "#2b2452"  # selection
+surface0 = "#262433"      # surface-raised, floats and popups
+surface1 = "#2a2837"      # hover
+overlay0 = "#7a778d"      # placeholder
+overlay1 = "#8c89a0"      # ink-tertiary
+text = "#f4f3f9"          # ink
+subtext0 = "#aba8bd"      # ink-secondary
+# herdr also uses accent for the active tab background, so it's a darker,
+# warmer purple than #b5a6ff. #4e3fa3 read as blue there.
+accent = "#5a3a8c"
+mauve = "#c4a7ff"
+blue = "#86afff"
+teal = "#5fd3b0"
+green = "#45d69a"
+yellow = "#f8c15a"
+peach = "#ff9c8f"
+red = "#ff7b7f"
 
 [keys]
 prefix = "ctrl+a"
@@ -20,12 +38,34 @@ split_horizontal = "prefix+double_quote"
 split_vertical   = "prefix+percent"
 new_tab   = "prefix+c"
 close_tab = "prefix+ampersand"
-workspace_picker = "prefix+w"
+# Session keys from tmux.conf. A herdr workspace is a tmux session.
+reload_config    = "prefix+^"
+rename_workspace = "prefix+r"
+new_workspace    = "prefix+shift+n"
+# prefix+w opens the popup list below. The built-in picker needs the panel open.
+workspace_picker = "prefix+i"
+# prefix+r is taken by rename_workspace above.
+resize_mode      = "prefix+shift+r"
 goto             = "prefix+g"
 copy_mode  = "prefix+y"
 
 navigate_workspace_up   = "k"
 navigate_workspace_down = "j"
 
+# tmux-style workspace list. Windows runs commands through cmd.exe.
+[[keys.command]]
+key = "prefix+w"
+type = "popup"
+command = '"%USERPROFILE%\.dotfiles\herdr\picker\herdr-picker.exe"'
+width = "50%"
+height = "40%"
+
 [ui]
 agent_panel_sort = "spaces"
+# Hide the left panel. prefix+b shows it, prefix+w lists workspaces.
+sidebar_start_collapsed = true
+sidebar_collapsed_mode = "hidden"
+# WezTerm's tab shows this title. The default adds "{hostname}: " first.
+window_title = "{workspace}"
+# Splits get a divider line, but no frame around the outside, like tmux.
+pane_outer_borders = false

@@ -1,0 +1,31 @@
+# PReview dark palette shared with WezTerm, Neovim, herdr, and the Starship prompt.
+# Inside Neovim, Snacks.lazygit builds its own theme from the colorscheme.
+gui:
+  border: rounded
+  theme:
+    activeBorderColor:
+      - "#b5a6ff" # accent
+      - bold
+    inactiveBorderColor:
+      - "#7a778d" # placeholder
+    searchingActiveBorderColor:
+      - "#f8c15a" # yellow
+      - bold
+    optionsTextColor:
+      - "#b5a6ff" # accent
+    selectedLineBgColor:
+      - "#29234a" # accent-soft, the selected row in herdr and the picker
+    inactiveViewSelectedLineBgColor:
+      - "#262433" # surface-raised
+    cherryPickedCommitFgColor:
+      - "#b5a6ff" # accent
+    cherryPickedCommitBgColor:
+      - "#2b2452" # selection
+    markedBaseCommitFgColor:
+      - "#86afff" # blue
+    markedBaseCommitBgColor:
+      - "#2b2452" # selection
+    unstagedChangesColor:
+      - "#ff7b7f" # red
+    defaultFgColor:
+      - "#f4f3f9" # ink

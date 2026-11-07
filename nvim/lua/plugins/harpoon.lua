@@ -31,6 +31,8 @@ return {
       pattern = "harpoon",
       callback = function()
         vim.cmd([[syntax match HarpoonFilename "[^/]\+$"]])
+        -- Clear backgrounds so the rounded border has no square corner cells.
+        vim.wo.winhighlight = "NormalFloat:HarpoonMenuNormal,FloatBorder:HarpoonMenuBorder,FloatTitle:HarpoonMenuTitle"
       end,
     })
   end,

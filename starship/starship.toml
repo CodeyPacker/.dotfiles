@@ -4,48 +4,52 @@ add_newline = true
 format = "$directory$git_branch$git_status$cmd_duration$status$line_break$character"
 palette = "preview"
 
+# Every segment is a pill: a rounded cap (Nerd Font U+E0B6 / U+E0B4) on each
+# side, coloured like the segment's background. Same radius idea as the
+# cupertino herdr layout. Needs a Nerd Font or a terminal that falls back to one.
+
 [character]
 success_symbol = "[❯](bold violet)"
 error_symbol = "[❯](bold danger)"
 vimcmd_symbol = "[❮](bold info)"
 
 [directory]
-format = "[ $path ]($style)([ $read_only ]($read_only_style)) "
+format = "[](fg:surface)[$path]($style)([ $read_only ]($read_only_style))[](fg:surface) "
 truncation_length = 4
 style = "bold fg:ink bg:surface"
 read_only = "read only"
 read_only_style = "fg:danger bg:danger_bg"
 
 [git_branch]
-format = "[ $branch ]($style) "
+format = "[](fg:violet_bg)[$branch]($style)[](fg:violet_bg) "
 style = "bold fg:violet bg:violet_bg"
 
 [git_status]
 format = "$all_status$ahead_behind"
-conflicted = '[ $count conflict ](fg:danger bg:danger_bg) '
-modified = '[ $count modified ](fg:warning bg:warning_bg) '
-staged = '[ $count staged ](fg:warning bg:warning_bg) '
-untracked = '[ $count untracked ](fg:warning bg:warning_bg) '
-deleted = '[ $count deleted ](fg:danger bg:danger_bg) '
-renamed = '[ $count renamed ](fg:warning bg:warning_bg) '
-typechanged = '[ $count type changed ](fg:warning bg:warning_bg) '
-stashed = '[ $count stashed ](fg:info bg:info_bg) '
-ahead = '[ $count ahead ](fg:info bg:info_bg) '
-behind = '[ $count behind ](fg:warning bg:warning_bg) '
-diverged = '[ $ahead_count ahead · $behind_count behind ](fg:warning bg:warning_bg) '
+conflicted = '[](fg:danger_bg)[$count conflict](fg:danger bg:danger_bg)[](fg:danger_bg) '
+modified = '[](fg:warning_bg)[$count modified](fg:warning bg:warning_bg)[](fg:warning_bg) '
+staged = '[](fg:warning_bg)[$count staged](fg:warning bg:warning_bg)[](fg:warning_bg) '
+untracked = '[](fg:warning_bg)[$count untracked](fg:warning bg:warning_bg)[](fg:warning_bg) '
+deleted = '[](fg:danger_bg)[$count deleted](fg:danger bg:danger_bg)[](fg:danger_bg) '
+renamed = '[](fg:warning_bg)[$count renamed](fg:warning bg:warning_bg)[](fg:warning_bg) '
+typechanged = '[](fg:warning_bg)[$count type changed](fg:warning bg:warning_bg)[](fg:warning_bg) '
+stashed = '[](fg:info_bg)[$count stashed](fg:info bg:info_bg)[](fg:info_bg) '
+ahead = '[](fg:info_bg)[$count ahead](fg:info bg:info_bg)[](fg:info_bg) '
+behind = '[](fg:warning_bg)[$count behind](fg:warning bg:warning_bg)[](fg:warning_bg) '
+diverged = '[](fg:warning_bg)[$ahead_count ahead · $behind_count behind](fg:warning bg:warning_bg)[](fg:warning_bg) '
 
 [cmd_duration]
 min_time = 2000
-format = "[ $duration ]($style) "
+format = "[](fg:info_bg)[$duration]($style)[](fg:info_bg) "
 style = "fg:info bg:info_bg"
 
+# The caps live in the symbols because success and failure use different
+# backgrounds and the format string can't switch cap colour on its own.
 [status]
 disabled = false
-format = "[ $symbol ]($style) "
-success_symbol = "✓ clean exit"
-symbol = "command failed"
-success_style = "fg:success bg:success_bg"
-failure_style = "fg:danger bg:danger_bg"
+format = "$symbol "
+success_symbol = "[](fg:success_bg)[✓](fg:success bg:success_bg)[](fg:success_bg)"
+symbol = "[](fg:danger_bg)[command failed](fg:danger bg:danger_bg)[](fg:danger_bg)"
 
 # PReview Design System dark surfaces, text, and status colors.
 [palettes.preview]

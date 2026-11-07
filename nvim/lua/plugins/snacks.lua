@@ -74,6 +74,22 @@ return {
   config = function(_, opts)
     require("snacks").setup(opts)
 
+    -- Hide the terminal cursor block in picker lists. The row highlight already
+    -- marks the selection. The TUI hides the cursor when its group has blend=100.
+    local saved_guicursor
+    vim.api.nvim_create_autocmd({ "BufEnter", "WinEnter", "FileType" }, {
+      group = vim.api.nvim_create_augroup("SnacksPickerHiddenCursor", { clear = true }),
+      callback = function()
+        local in_list = vim.bo.filetype == "snacks_picker_list"
+        if in_list and not saved_guicursor then
+          saved_guicursor = vim.o.guicursor
+          vim.o.guicursor = saved_guicursor .. ",n:block-SnacksPickerHiddenCursor"
+        elseif not in_list and saved_guicursor then
+          vim.o.guicursor = saved_guicursor
+          saved_guicursor = nil
+        end
+      end,
+    })
   end,
   keys = {
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },

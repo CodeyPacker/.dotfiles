@@ -8,8 +8,19 @@ local function diagnostics(bufnr)
   return diagnostic_counts[bufnr]
 end
 
+local groups = { "Normal", "Insert", "Visual", "Replace", "File", "Info", "Warning", "Error" }
+
+-- Round end caps: the tag's background color drawn as text on the bar.
+local function set_cap_highlights()
+  for _, group in ipairs(groups) do
+    local hl = vim.api.nvim_get_hl(0, { name = "Preview" .. group, link = false })
+    vim.api.nvim_set_hl(0, "Preview" .. group .. "Cap", { fg = hl.bg })
+  end
+end
+
 local function tag(group, text)
-  return "%#Preview" .. group .. "# " .. text .. " %#StatusLine# "
+  local cap = "%#Preview" .. group .. "Cap#"
+  return cap .. "\u{e0b6}%#Preview" .. group .. "#" .. text .. cap .. "\u{e0b4}%#StatusLine# "
 end
 
 function M.render()
@@ -27,8 +38,10 @@ function M.render()
     label, group = "TERMINAL", "Insert"
   end
 
-  local parts = { tag(group, label), tag("File", "%<%t") }
-  if vim.bo.modified then
+  -- The harpoon menu is a scratch buffer with a generated name that always reads as modified.
+  local harpoon = vim.bo.filetype == "harpoon"
+  local parts = { tag(group, label), tag("File", harpoon and "Harpoon" or "%<%t") }
+  if vim.bo.modified and not harpoon then
     parts[#parts + 1] = tag("Warning", "modified")
   end
   if vim.bo.readonly then
@@ -55,6 +68,8 @@ end
 function M.setup()
   diagnostic_counts = {}
   local group = vim.api.nvim_create_augroup("PreviewStatusline", { clear = true })
+  set_cap_highlights()
+  vim.api.nvim_create_autocmd("ColorScheme", { group = group, callback = set_cap_highlights })
   vim.api.nvim_create_autocmd("DiagnosticChanged", {
     group = group,
     callback = function(args)

@@ -1,0 +1,8 @@
+# Global mprocs config. herdr uses Ctrl+A as its prefix, so mprocs' default
+# Ctrl+A focus toggle never arrives. Ctrl+S toggles focus instead.
+keymap_procs:
+  <C-s>: { c: toggle-focus }
+  <C-a>: null
+keymap_term:
+  <C-s>: { c: toggle-focus }
+  <C-a>: null

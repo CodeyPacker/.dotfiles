@@ -10,3 +10,5 @@ opt.clipboard = "unnamedplus"
 opt.mouse = "a"
 opt.wrap = false
 opt.cursorline = true
+-- No empty command-line row under the statusline. It appears while typing a command.
+opt.cmdheight = 0
