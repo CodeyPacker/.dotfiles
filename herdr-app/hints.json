@@ -1,0 +1,20 @@
+{
+  "jumpLayout": "cards",
+  "spaceColor": "yellow",
+  "spaces": {
+    "Component Library": "C",
+    "herdr-mods": "H",
+    "Explore": "E",
+    "Logos": "L"
+  },
+  "tabs": {
+    "Component Library/1": "c",
+    "herdr-mods/code": "c",
+    "herdr-mods/Agent": "a",
+    "Component Library/Agent": "a",
+    "Explore/Terminal": "s",
+    "Logos/Agent": "a",
+    "Logos/Code": "c",
+    "Component Library/Code": "c"
+  }
+}

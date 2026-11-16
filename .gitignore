@@ -25,3 +25,7 @@ vscode/harpoon/*.vsix
 # Herdr app rewrites its shipped themes on every start.
 herdr-app/themes/atom-one-dark.json
 herdr-app/themes/win98.json
+
+# Herdr app layout runtime state and backups.
+herdr-app/layouts/.state/
+herdr-app/layouts/*.bak*

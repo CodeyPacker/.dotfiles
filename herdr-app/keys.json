@@ -46,14 +46,32 @@
     "ctrl-shift-/": "app.help",
     "ctrl-shift-?": "app.help",
     "ctrl-shift-b": "layout.toggle:sidebar",
-    "ctrl-shift-n": { "command": "space.new", "args": { "folder": "C:\\Users\\codyp" } },
+    "ctrl-shift-n": {
+      "command": "space.new",
+      "args": {
+        "folder": "C:\\Users\\codyp"
+      }
+    },
     "ctrl-shift-t": "tab.new",
     "ctrl-a b": "tab.prev",
     "ctrl-a n": "tab.next",
-    "ctrl-a w": "mod.open:jump",
+    "ctrl-a j": "mod.open:jump",
     "ctrl-a r": "mod.open:run",
     "ctrl-a p": "mod.open:portal",
-    "ctrl-a t":{ "command": "pane.split", "args": { "direction": "right", "mod": "tourist" } },
+    "ctrl-a t": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "mod": "tourist"
+      }
+    },
+    "ctrl-shift-s": {
+      "command": "pane.split",
+      "args": {
+        "direction": "right",
+        "mod": "sharp"
+      }
+    },
     "ctrl-shift-q": "overlay.close",
     "ctrl-shift-p": "app.palette",
     "ctrl-,": "app.settings",
@@ -64,7 +82,11 @@
     "ctrl-shift-z": "pane.zoom",
     "ctrl-shift-l": "layout.switch",
     "f2": "tab.rename",
-    "shift-f2": "space.rename"
+    "shift-f2": "space.rename",
+    "ctrl-a z": "mod.open:zen",
+    "ctrl-a m": "mod.open:spotify",
+    "ctrl-shift-i": "mod.open:tickets",
+    "ctrl-shift-y": "mod.open:branch"
   },
   "terminal": {
     "ctrl-backspace": "send:\u0017",
