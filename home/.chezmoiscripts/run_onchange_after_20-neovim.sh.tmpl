@@ -1,0 +1,15 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+# Rerun when the locked plugins, server list, or bootstrap implementation changes.
+# init: {{ include "dot_config/nvim/init.lua" | sha256sum }}
+# lock: {{ include "dot_config/nvim/lazy-lock.json" | sha256sum }}
+# servers: {{ include "dot_config/nvim/lua/config/lsp_servers.lua" | sha256sum }}
+# bootstrap: {{ include "dot_config/nvim/lua/config/bootstrap.lua" | sha256sum }}
+# lsp: {{ include "dot_config/nvim/lua/plugins/lsp-config.lua" | sha256sum }}
+
+command -v nvim >/dev/null || { echo 'Install Neovim before bootstrapping its plugins.' >&2; exit 1; }
+# Restore the checked-in versions instead of updating all plugins.
+nvim --headless '+Lazy! restore' '+qall'
+nvim --headless '+lua require("config.bootstrap").run()'
+{{ end -}}

@@ -32,6 +32,22 @@ The installer uses its own directory as the repository root, so the clone does n
 have to be named `.dotfiles`. Existing managed files are moved into a timestamped
 `~/.dotfiles-backup/` directory before links are created.
 
+## Linux on this machine
+
+This machine uses chezmoi to apply the files under `home/`. After changing or
+pulling this repository, preview and apply the configuration with:
+
+```bash
+chezmoi diff --exclude scripts
+chezmoi apply --exclude scripts
+chezmoi verify --exclude scripts
+```
+
+The `--exclude scripts` option skips package installation and Neovim plugin
+restoration. Run `chezmoi apply` when those setup steps are needed.
+Do not run `install-linux.sh` on this machine; it installs links over the files
+chezmoi manages.
+
 ## Personal Windows installation
 
 Clone the Windows copy onto an NTFS drive, normally under your Windows home folder:
@@ -105,8 +121,9 @@ Press `Ctrl+A`, release it, and then press:
 
 ## Updating
 
-Pull the repository and rerun the installer for that operating system. Existing
-correct links and junctions are left alone; changed targets are backed up first.
+On macOS and Windows, pull the repository and rerun the installer for that
+operating system. Existing correct links and junctions are left alone; changed
+targets are backed up first. On this Linux machine, use the chezmoi commands above.
 
 For Neovim plugin problems, run `:Lazy restore`. For Herdr config changes, run
 `herdr server reload-config`.

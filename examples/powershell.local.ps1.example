@@ -1,0 +1,5 @@
+# Copy to ~/.config/dotfiles/powershell.local.ps1 for machine-only settings.
+# This file lives outside the repository and can safely contain local paths.
+
+# $env:WORKSPACE_ROOT = "D:\Projects"
+# Set-Alias -Name work -Value "$env:WORKSPACE_ROOT"

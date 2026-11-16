@@ -1,0 +1,36 @@
+"$schema" = "https://starship.rs/config-schema.json"
+
+add_newline = false
+format = "$directory$git_branch$git_status$cmd_duration$line_break$character"
+palette = "rose_pine_moon"
+
+[character]
+success_symbol = "[❯](iris)"
+error_symbol = "[❯](love)"
+vicmd_symbol = "[❮](foam)"
+
+[cmd_duration]
+format = "[$duration]($style) "
+style = "foam"
+
+[directory]
+truncation_length = 4
+style = "bold foam"
+
+[git_branch]
+format = "on [$branch]($style) "
+style = "bold iris"
+
+[palettes.rose_pine_moon]
+base = "#232136"
+surface = "#2a273f"
+overlay = "#393552"
+muted = "#6e6a86"
+subtle = "#908caa"
+text = "#e0def4"
+love = "#eb6f92"
+gold = "#f6c177"
+rose = "#ea9a97"
+pine = "#3e8fb0"
+foam = "#9ccfd8"
+iris = "#c4a7e7"

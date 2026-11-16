@@ -1,0 +1,9 @@
+-- Copy this file to ~/.config/dotfiles/wezterm.local.lua. It is intentionally
+-- outside the repository so machine-only paths and settings are never pushed.
+return function(config, wezterm)
+  -- Example for choosing a specific WSL distribution:
+  -- config.default_domain = "WSL:Ubuntu-24.04"
+
+  -- Example for a machine-specific font size:
+  -- config.font_size = 14.0
+end

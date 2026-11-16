@@ -1,0 +1,34 @@
+# Patterns refer to destination paths. Unmanaged local overrides stay local.
+.config/dotfiles/*.local.*
+**/*.local.*
+**/*.log
+**/*history*
+**/.cache
+**/node_modules
+.config/herdr/session.json
+.config/herdr/sessions
+.config/herdr/.plugins.lock
+{{ if eq .chezmoi.os "windows" }}
+.zshrc
+.tmux.conf
+.config/zsh
+.config/nvim
+{{ else }}
+AppData
+.config/powershell
+.wezterm.lua
+{{ end }}
+{{ if ne .chezmoi.os "darwin" }}
+Library
+.config/dotfiles/Brewfile
+.config/wezterm/profiles/personal-mac.lua
+{{ end }}
+{{ if ne .chezmoi.os "windows" }}
+.config/dotfiles/windows-packages.psd1
+.config/wezterm/profiles/personal-windows.lua
+.config/wezterm/profiles/work-windows.lua
+{{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/fish
+.config/wezterm/profiles/linux.lua
+{{ end }}

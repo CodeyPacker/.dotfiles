@@ -1,5 +1,9 @@
 #gitignore
 
+# Machine-local chezmoi data and runtime logs
+home/dot_gitconfig
+nvim.log
+
 #brew
 Brewfile.lock.json
 

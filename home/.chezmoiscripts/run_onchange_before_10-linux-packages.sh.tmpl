@@ -1,0 +1,36 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/usr/bin/env bash
+set -euo pipefail
+
+. /etc/os-release
+case " ${ID:-} ${ID_LIKE:-} " in
+  *' arch '*|*' cachyos '*) ;;
+  *) echo 'Package setup currently supports CachyOS/Arch. Install dependencies manually and apply with --exclude scripts.' >&2; exit 1 ;;
+esac
+
+# Dependencies for the configured terminal, shell, editor, plugins, and LSPs.
+# pacman -T accepts providers, preserving an installed Node.js LTS package.
+packages=(
+  git curl unzip tar gzip base-devel
+  neovim wezterm ttf-hack-nerd
+  nodejs npm go
+  ripgrep fd lazygit glow
+  starship tmux zsh zsh-autosuggestions
+  wl-clipboard xclip
+)
+status=0
+missing=$(pacman -T "${packages[@]}") || status=$?
+case "$status" in
+  0) echo 'Linux packages already installed.'; exit 0 ;;
+  127) mapfile -t missing_packages <<< "$missing" ;;
+  *) echo 'Unable to query installed packages.' >&2; exit "$status" ;;
+esac
+
+printf 'Installing missing packages: %s\n' "${missing_packages[*]}"
+# Use the existing package databases. Never perform a partial upgrade with -Sy.
+if (( EUID == 0 )); then
+  pacman -S --needed "${missing_packages[@]}"
+else
+  sudo pacman -S --needed "${missing_packages[@]}"
+fi
+{{ end -}}

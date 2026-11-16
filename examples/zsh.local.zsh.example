@@ -1,0 +1,2 @@
+# Copy to ~/.config/dotfiles/zsh.local.zsh for machine-only paths and aliases.
+# export WORKSPACE_ROOT="$HOME/Projects"
