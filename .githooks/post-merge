@@ -8,7 +8,8 @@ changed=$(git diff --name-only ORIG_HEAD HEAD -- \
   herdr-app/keys.json \
   herdr-app/hints.json \
   herdr-app/settings.json \
-  herdr-app/mods/islands-workspace-chrome/settings.json | sed 's|^herdr-app/||')
+  herdr-app/mods/islands-workspace-chrome/settings.json \
+  herdr-app/shared.json | sed 's|^herdr-app/||')
 
 if [ -z "$changed" ]; then
   exit 0

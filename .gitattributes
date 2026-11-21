@@ -6,3 +6,4 @@ herdr-app/keys.json text eol=lf
 herdr-app/hints.json text eol=lf
 herdr-app/settings.json text eol=lf
 herdr-app/mods/islands-workspace-chrome/settings.json text eol=lf
+herdr-app/shared.json text eol=lf
