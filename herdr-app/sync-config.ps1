@@ -12,7 +12,7 @@ param(
   [string]$Mode = "pull",
 
   [Parameter(ValueFromRemainingArguments)]
-  [ValidateSet("keys.json", "hints.json", "settings.json", "mods/islands-workspace-chrome/settings.json")]
+  [ValidateSet("keys.json", "hints.json", "settings.json", "mods/islands-workspace-chrome/settings.json", "shared.json")]
   [string[]]$Files
 )
 
@@ -20,7 +20,7 @@ Set-StrictMode -Version Latest
 $ErrorActionPreference = "Stop"
 
 if (-not $Files) {
-  $Files = @("keys.json", "hints.json", "settings.json", "mods/islands-workspace-chrome/settings.json")
+  $Files = @("keys.json", "hints.json", "settings.json", "mods/islands-workspace-chrome/settings.json", "shared.json")
 }
 
 $appDir = Join-Path $HOME ".config\herdr-app"
@@ -36,6 +36,16 @@ if (-not (Test-Path -LiteralPath $appDir)) {
 foreach ($file in $Files) {
   $repoFile = Join-Path $PSScriptRoot $file
   $appFile = Join-Path $appDir $file
+
+  # Only some keys of shared.json are copied. sync-shared.mjs does that and explains why.
+  if ($file -eq "shared.json") {
+    if (Get-Command node -ErrorAction SilentlyContinue) {
+      & node (Join-Path $PSScriptRoot "sync-shared.mjs") $Mode $repoFile $appFile
+    } else {
+      Write-Host "Skipping shared.json, it needs Node and node is not on PATH." -ForegroundColor Yellow
+    }
+    continue
+  }
 
   if ($Mode -eq "pull") {
     $source = $repoFile

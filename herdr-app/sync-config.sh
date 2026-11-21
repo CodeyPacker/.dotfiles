@@ -9,7 +9,7 @@
 
 set -eu
 
-ALL_FILES="keys.json hints.json settings.json mods/islands-workspace-chrome/settings.json"
+ALL_FILES="keys.json hints.json settings.json mods/islands-workspace-chrome/settings.json shared.json"
 
 MODE=${1:-pull}
 [ $# -gt 0 ] && shift
@@ -44,6 +44,16 @@ for file in "$@"; do
       exit 1
       ;;
   esac
+
+  # Only some keys of shared.json are copied. sync-shared.mjs does that and explains why.
+  if [ "$file" = "shared.json" ]; then
+    if command -v node >/dev/null 2>&1; then
+      node "$SCRIPT_DIR/sync-shared.mjs" "$MODE" "$SCRIPT_DIR/$file" "$APP_DIR/$file"
+    else
+      echo "Skipping shared.json, it needs Node and node is not on PATH."
+    fi
+    continue
+  fi
 
   if [ "$MODE" = "pull" ]; then
     source_file="$SCRIPT_DIR/$file"

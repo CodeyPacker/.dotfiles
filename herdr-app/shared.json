@@ -1,0 +1,14 @@
+{
+  "layout": "islands-usage-limits",
+  "workspace.panels": [
+    "files",
+    "changes"
+  ],
+  "sidebar.width": 268,
+  "sidebar.collapsed": false,
+  "agents.sort": "grouped",
+  "tickets.agent": "claude",
+  "tickets.hiddenAgents": [
+    "copilot"
+  ]
+}
