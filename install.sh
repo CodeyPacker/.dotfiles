@@ -87,18 +87,37 @@ link_mod() {
 }
 
 if [ -d "$HOME/.config/herdr-app" ]; then
-  for mod in branch bruno git-good jump keybinds portal run spotify tickets tourist zen; do
+  for mod in branch bruno brunr git-good jump keybinds portal run spotify tickets tourist vaultr zen; do
     link_mod "$HOME/personal/herdr-mods/$mod/mods/$mod" "$mod"
+  done
+  # The islands mods are copied once, not linked: the app keeps a settings file in one of them,
+  # and a link would write that file into the herdr-mods repo. Windows has copies too.
+  for mod in islands-agents islands-pane islands-spaces islands-tabs islands-workspace-chrome islands-workspace-status; do
+    mod_source="$HOME/personal/herdr-mods/islands/mods/$mod"
+    mod_target="$HOME/.config/herdr-app/mods/$mod"
+    if [ -e "$mod_target" ]; then
+      echo "Already installed: $mod_target"
+    elif [ -d "$mod_source" ]; then
+      mkdir -p "$HOME/.config/herdr-app/mods"
+      cp -R "$mod_source" "$mod_target"
+      echo "Copied $mod_source to $mod_target"
+    else
+      echo "Skipping Herdr mod $mod, not found: $mod_source"
+    fi
   done
   link_mod "$HOME/personal/sharp/mod" sharp
   link_mod "$HOME/personal/tutor/mod" tutor
+  # Folders only. Herdr rewrites its settings files in place, which would replace a file link.
+  for dir in themes layouts backgrounds; do
+    link_path "$DOTFILES_ROOT/herdr-app/$dir" "$HOME/.config/herdr-app/$dir"
+  done
 else
-  echo "Herdr app config folder not found, skipping mod links: $HOME/.config/herdr-app"
+  echo "Herdr app config folder not found, skipping its links: $HOME/.config/herdr-app"
 fi
-# Herdr app keybinds are copied, not linked, because the app rewrites the file.
-# The post-merge hook reruns the copy after a git pull.
-# Run "herdr-app/sync-keys.sh push" to save keybinds changed in the app.
-"$DOTFILES_ROOT/herdr-app/sync-keys.sh" pull
+# The settings files (keys, hints, settings, islands opacity) are copied by sync-config.sh.
+# The post-merge hook reruns it after a git pull.
+# Run "herdr-app/sync-config.sh push" to save changes made in the app.
+"$DOTFILES_ROOT/herdr-app/sync-config.sh" pull
 git -C "$DOTFILES_ROOT" config core.hooksPath .githooks
 link_path "$DOTFILES_ROOT/starship/starship.toml" "$HOME/.config/starship.toml"
 link_path "$DOTFILES_ROOT/ai/prompts" "$HOME/.config/ai-prompts"

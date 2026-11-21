@@ -243,7 +243,7 @@ Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "ai\skills\tech-spec") -T
 Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "mprocs") -Target (Join-Path $env:APPDATA "mprocs")
 # Herdr desktop app mods live in their own repo (personal/herdr-mods). The app hot
 # reloads through the junctions, so edits there show up live.
-foreach ($mod in @("branch", "bruno", "git-good", "jump", "keybinds", "portal", "run", "spotify", "tickets", "tourist", "zen")) {
+foreach ($mod in @("branch", "bruno", "brunr", "git-good", "jump", "keybinds", "portal", "run", "spotify", "tickets", "tourist", "vaultr", "zen")) {
   Set-DirectoryJunction -Source (Join-Path $HOME "personal\herdr-mods\$mod\mods\$mod") -Target (Join-Path $HOME ".config\herdr-app\mods\$mod")
 }
 # Mods kept in their own repos, linked only when that repo is cloned.
@@ -253,15 +253,14 @@ foreach ($pair in @(@("sharp", "personal\sharp\mod"), @("tutor", "personal\tutor
     Set-DirectoryJunction -Source $modSource -Target (Join-Path $HOME ".config\herdr-app\mods\$($pair[0])")
   }
 }
-# Folders only. Herdr rewrites settings.json, keys.json and hints.json in place, which would
-# replace a file link. settings.json, hints.json and mods/islands-workspace-chrome/settings.json
-# are copied over by hand.
+# Folders only. Herdr rewrites its settings files in place, which would replace a file link.
 foreach ($dir in @("themes", "layouts", "backgrounds")) {
   Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "herdr-app\$dir") -Target (Join-Path $HOME ".config\herdr-app\$dir")
 }
-# keys.json is copied by sync-keys.ps1. The post-merge hook reruns it after a git pull.
-# Run "herdr-app\sync-keys.ps1 push" to save keybinds changed in the app.
-& (Join-Path $dotfilesRoot "herdr-app\sync-keys.ps1") pull
+# The settings files (keys, hints, settings, islands opacity) are copied by sync-config.ps1.
+# The post-merge hook reruns it after a git pull.
+# Run "herdr-app\sync-config.ps1 push" to save changes made in the app.
+& (Join-Path $dotfilesRoot "herdr-app\sync-config.ps1") pull
 & git -C $dotfilesRoot config core.hooksPath .githooks
 # Only the config file. lazygit keeps its state files in the same folder.
 Set-FileSymbolicLink -Source (Join-Path $dotfilesRoot "lazygit\config.yml") -Target (Join-Path $env:LOCALAPPDATA "lazygit\config.yml")
