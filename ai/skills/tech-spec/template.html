@@ -1,0 +1,263 @@
+<title>{{TASK_NAME}} Tech Spec</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,700&family=Public+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: document header with an information block, then a sticky section rail on the left and one reading column on the right. The rail becomes a chip strip on phones. */
+:root {
+  --bg: #f3f5f7;
+  --surface: #ffffff;
+  --fg: #1b1f24;
+  --muted: #5b6672;
+  --line: #dde2e8;
+  --accent: #2472c8;
+  --accent-soft: #e3eefa;
+  --warn: #a35a00;
+  --warn-soft: #fbefdc;
+  --ok: #1d7a4c;
+  --ok-soft: #e0f3e8;
+  --code-bg: #eef1f4;
+  --f-display: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body: "Public Sans", "Segoe UI", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", Consolas, "SFMono-Regular", monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #121314; --surface: #191a1b; --fg: #d4d6d8; --muted: #8c949c; --line: #2a2b2c;
+    --accent: #3b8eea; --accent-soft: #16273a; --warn: #e5a54b; --warn-soft: #2c2214;
+    --ok: #5cc48d; --ok-soft: #14291e; --code-bg: #1f2122;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #121314; --surface: #191a1b; --fg: #d4d6d8; --muted: #8c949c; --line: #2a2b2c;
+  --accent: #3b8eea; --accent-soft: #16273a; --warn: #e5a54b; --warn-soft: #2c2214;
+  --ok: #5cc48d; --ok-soft: #14291e; --code-bg: #1f2122;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body { background: var(--bg); color: var(--fg); font-family: var(--f-body); font-size: 15px; line-height: 1.6; }
+.wrap { max-width: 1120px; margin: 0 auto; padding-left: max(20px, env(safe-area-inset-left, 0px)); padding-right: max(20px, env(safe-area-inset-right, 0px)); padding-block: 40px 80px; display: grid; grid-template-columns: 220px minmax(0, 1fr); gap: 48px; }
+
+header.top { grid-column: 1 / -1; display: grid; gap: 14px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+h1 { font-family: var(--f-display); font-size: clamp(30px, 5vw, 44px); line-height: 1.1; margin: 0; text-wrap: balance; }
+
+.info { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0; margin: 6px 0 0; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.info div { display: grid; gap: 4px; padding: 12px 16px; border-right: 1px solid var(--line); border-bottom: 1px solid var(--line); margin: 0 -1px -1px 0; align-content: start; }
+.info dt, .label { font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); }
+.info dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+
+.pill { display: inline-block; font-family: var(--f-mono); font-size: 12px; font-weight: 500; padding: 2px 9px; border-radius: 999px; background: var(--code-bg); color: var(--muted); white-space: nowrap; }
+.pill.review { background: var(--accent-soft); color: var(--accent); }
+.pill.approved { background: var(--ok-soft); color: var(--ok); }
+.pill.changes { background: var(--warn-soft); color: var(--warn); }
+
+nav.rail { position: sticky; top: calc(env(safe-area-inset-top, 0px) + 24px); align-self: start; display: grid; gap: 2px; }
+nav.rail a { display: grid; grid-template-columns: 26px 1fr auto; align-items: baseline; padding: 6px 10px; border-radius: 6px; color: var(--muted); text-decoration: none; font-size: 14px; }
+nav.rail a span { font-family: var(--f-mono); font-size: 12px; }
+nav.rail a:hover, nav.rail a:focus-visible { background: var(--accent-soft); color: var(--fg); outline: none; }
+nav.rail a .n-open { font-size: 11px; color: var(--warn); background: var(--warn-soft); border-radius: 999px; padding: 0 7px; }
+
+main { display: grid; gap: 56px; min-width: 0; }
+section.sec { display: grid; gap: 16px; scroll-margin-top: 24px; min-width: 0; }
+.sec-head { display: grid; gap: 4px; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.sec-num { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+h2 { font-family: var(--f-display); font-size: 24px; line-height: 1.2; margin: 0; text-wrap: balance; }
+h3 { font-family: var(--f-body); font-size: 16px; font-weight: 600; margin: 12px 0 0; scroll-margin-top: 24px; }
+h3 .sec-num { margin-right: 8px; font-weight: 400; }
+p { margin: 0; max-width: 68ch; }
+main ul, main ol { margin: 0; padding-left: 20px; max-width: 68ch; display: grid; gap: 4px; }
+main a { color: var(--accent); text-underline-offset: 3px; }
+code { font-family: var(--f-mono); font-size: .88em; background: var(--code-bg); padding: 1px 5px; border-radius: 4px; }
+pre { margin: 0; font-family: var(--f-mono); font-size: 13px; line-height: 1.55; background: var(--code-bg); border: 1px solid var(--line); border-radius: 8px; padding: 14px 16px; overflow-x: auto; }
+.diagram { overflow-x: auto; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; }
+.diagram pre.mermaid { background: none; border: 0; padding: 0; }
+.tbd { color: var(--muted); font-style: italic; }
+del { color: var(--muted); }
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 14px; min-width: 520px; }
+th, td { text-align: left; padding: 9px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 11px; letter-spacing: .05em; text-transform: uppercase; color: var(--muted); font-weight: 500; }
+tr:last-child td { border-bottom: 0; }
+td.id { font-family: var(--f-mono); font-size: 12.5px; color: var(--accent); white-space: nowrap; }
+
+.open { display: grid; grid-template-columns: 40px minmax(0, 1fr); gap: 12px; padding: 12px 14px; border-radius: 8px; background: var(--warn-soft); }
+.open .qc { font-family: var(--f-mono); font-size: 13px; color: var(--warn); font-weight: 500; }
+.open p { font-size: 14px; }
+.open .owner { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+
+.log { list-style: none; padding: 0; display: grid; gap: 6px; max-width: none; }
+.log li { display: grid; grid-template-columns: 96px minmax(0, 1fr); gap: 16px; font-size: 14px; }
+.log time { font-family: var(--f-mono); font-size: 12.5px; color: var(--muted); font-variant-numeric: tabular-nums; }
+
+@media (max-width: 820px) {
+  .wrap { grid-template-columns: minmax(0, 1fr); gap: 28px; padding-left: max(16px, env(safe-area-inset-left, 0px)); padding-right: max(16px, env(safe-area-inset-right, 0px)); }
+  nav.rail { position: static; display: flex; overflow-x: auto; gap: 6px; padding-bottom: 4px; }
+  nav.rail a { display: flex; gap: 6px; white-space: nowrap; border: 1px solid var(--line); background: var(--surface); }
+  .log li { grid-template-columns: minmax(0, 1fr); gap: 0; }
+}
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+</style>
+
+<div class="wrap">
+  <header class="top">
+    <div class="eyebrow">Software Technical Specification</div>
+    <h1>{{TASK_NAME}}</h1>
+    <dl class="info">
+      <!-- Status pill class: none for Draft, "review" for In review, "approved" for Approved. -->
+      <div><dt>Status</dt><dd><span class="pill">Draft</span></dd></div>
+      <div><dt>Date</dt><dd>{{YYYY-MM-DD, date of the last publish}}</dd></div>
+      <div><dt>Author(s)</dt><dd>{{AUTHORS}}</dd></div>
+      <div><dt>Estimated effort</dt><dd>{{TBD | Low | Medium | High}}</dd></div>
+      <div><dt>Approvers</dt><dd>{{NAMES or TBD}}</dd></div>
+      <div><dt>Open questions</dt><dd id="open-total">0</dd></div>
+    </dl>
+  </header>
+
+  <nav class="rail" aria-label="Sections">
+    <a href="#review"><span>&middot;</span>Review and approval</a>
+    <a href="#s1"><span>1</span>Overview</a>
+    <a href="#s2"><span>2</span>Goals &amp; non-goals</a>
+    <a href="#s3"><span>3</span>Requirements</a>
+    <a href="#s4"><span>4</span>Proposed solution</a>
+    <a href="#s5"><span>5</span>Deployment</a>
+    <a href="#changes"><span>&middot;</span>Change log</a>
+  </nav>
+
+  <main>
+    <!-- Components available inside a section:
+
+      Not discussed yet (the starting state of every subsection):
+        <p class="tbd">Not discussed yet.</p>
+
+      Open question, placed in the subsection it blocks. Codes Q1, Q2, ... are never reused.
+        <div class="open"><span class="qc">Q1</span><div><p>Question text.</p><span class="owner">Owner: name</span></div></div>
+
+      Goals list (codes G1, G2, ...):
+        <div class="table-wrap"><table>
+          <tr><th>ID</th><th>Goal</th><th>Measure and target</th></tr>
+          <tr><td class="id">G1</td><td>Text.</td><td>From X to Y by date, measured in Z.</td></tr>
+        </table></div>
+
+      Requirements (codes FR-1, NFR-1, ...). Functional rows name the goal they serve. Non-functional rows give target and measurement.
+        <div class="table-wrap"><table>
+          <tr><th>ID</th><th>Requirement</th><th>Serves</th></tr>
+          <tr><td class="id">FR-1</td><td>Text.</td><td>G1</td></tr>
+        </table></div>
+        Retire a published ID with <del>: <td class="id"><del>FR-2</del></td><td><del>Text.</del> Removed: reason.</td>
+
+      Acceptance table in 5.1 (every FR and NFR appears):
+        <div class="table-wrap"><table>
+          <tr><th>Requirement</th><th>Test type</th><th>Acceptance criterion</th></tr>
+          <tr><td class="id">FR-1</td><td>Integration</td><td>Text.</td></tr>
+        </table></div>
+
+      Architecture diagram (mermaid renders natively, load no library). This example uses the thick arrow
+      because the normal mermaid arrow would end this HTML comment. Use the normal arrow in the page.
+        <div class="diagram"><pre class="mermaid">flowchart LR
+          A[Client] ==> B[API]</pre></div>
+
+      Code, schema, or request and response shapes:
+        <pre>...</pre>
+
+      Any other table: wrap it in <div class="table-wrap">.
+
+      Section 4: delete each h3 block that does not apply to this project, and renumber nothing.
+    -->
+
+    <section class="sec" id="review">
+      <div class="sec-head"><h2>Review and approval</h2></div>
+      <div class="table-wrap"><table>
+        <tr><th>Name</th><th>Role</th><th>Status</th></tr>
+        <!-- One row per approver. Status pill: none for Pending, "approved" for Approved, "changes" for Changes requested. -->
+        <tr><td>{{NAME}}</td><td>{{ROLE}}</td><td><span class="pill">Pending</span></td></tr>
+      </table></div>
+    </section>
+
+    <section class="sec" id="s1">
+      <div class="sec-head"><span class="sec-num">1</span><h2>Overview</h2></div>
+      <h3 id="s1-1"><span class="sec-num">1.1</span>Summary</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s1-2"><span class="sec-num">1.2</span>Background</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s1-3"><span class="sec-num">1.3</span>Problem</h3>
+      <p class="tbd">Not discussed yet.</p>
+    </section>
+
+    <section class="sec" id="s2">
+      <div class="sec-head"><span class="sec-num">2</span><h2>Goals &amp; non-goals</h2></div>
+      <h3 id="s2-1"><span class="sec-num">2.1</span>Goals</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s2-2"><span class="sec-num">2.2</span>Non-goals</h3>
+      <p class="tbd">Not discussed yet.</p>
+    </section>
+
+    <section class="sec" id="s3">
+      <div class="sec-head"><span class="sec-num">3</span><h2>Requirements</h2></div>
+      <h3 id="s3-1"><span class="sec-num">3.1</span>PRD (Product Requirements Document)</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s3-2"><span class="sec-num">3.2</span>Functional requirements</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s3-3"><span class="sec-num">3.3</span>Non-functional requirements</h3>
+      <p class="tbd">Not discussed yet.</p>
+    </section>
+
+    <section class="sec" id="s4">
+      <div class="sec-head"><span class="sec-num">4</span><h2>Proposed solution and system architecture</h2></div>
+      <h3 id="s4-1"><span class="sec-num">4.1</span>Architecture overview</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-2"><span class="sec-num">4.2</span>Data model and storage</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-3"><span class="sec-num">4.3</span>APIs and interfaces</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-4"><span class="sec-num">4.4</span>UI and user flows</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-5"><span class="sec-num">4.5</span>Integrations and dependencies</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-6"><span class="sec-num">4.6</span>Platform and environment</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-7"><span class="sec-num">4.7</span>Performance</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s4-8"><span class="sec-num">4.8</span>Security considerations</h3>
+      <p class="tbd">Not discussed yet.</p>
+    </section>
+
+    <section class="sec" id="s5">
+      <div class="sec-head"><span class="sec-num">5</span><h2>Deployment</h2></div>
+      <h3 id="s5-1"><span class="sec-num">5.1</span>Testing strategy</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s5-2"><span class="sec-num">5.2</span>Deployment and rollback</h3>
+      <p class="tbd">Not discussed yet.</p>
+      <h3 id="s5-3"><span class="sec-num">5.3</span>Monitoring and alerting</h3>
+      <p class="tbd">Not discussed yet.</p>
+    </section>
+
+    <section class="sec" id="changes">
+      <div class="sec-head"><h2>Change log</h2></div>
+      <!-- Newest first. One line per publish after the first. -->
+      <ul class="log">
+        <li><time>{{YYYY-MM-DD}}</time><span>First draft published.</span></li>
+      </ul>
+    </section>
+  </main>
+</div>
+
+<script>
+// Counts open questions: the total goes in the header, and each rail link shows the count for its section.
+(function () {
+  var total = document.querySelectorAll(".open").length;
+  var out = document.getElementById("open-total");
+  if (out) out.textContent = String(total);
+  document.querySelectorAll("nav.rail a").forEach(function (a) {
+    var sec = document.querySelector(a.getAttribute("href"));
+    var n = sec ? sec.querySelectorAll(".open").length : 0;
+    if (!n) return;
+    var b = document.createElement("span");
+    b.className = "n-open"; b.textContent = String(n); b.title = n + " open question" + (n > 1 ? "s" : "");
+    a.appendChild(b);
+  });
+})();
+</script>
