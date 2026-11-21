@@ -10,7 +10,7 @@ description: Change the Herdr desktop app background picture and how much of it 
 Open it in the running Herdr app:
 
 ```sh
-herdr-app do mod.open:backgrounds
+herdr-app do mod.open:wallpaper
 ```
 
 Then tell the user how it works, in a few lines:
@@ -21,7 +21,7 @@ Then tell the user how it works, in a few lines:
 - Enter goes to the borders: left and right (or h and l) pick the theme's color, light or dark (faint white or black, for busy pictures), again shown at once.
 - Enter keeps it all. Esc puts back what was there before. `ctrl-a w` opens the picker any time.
 
-The picker is the `backgrounds` Herdr mod in `herdr-mod/` next to this file. It changes the layout with `layout.set`, which shows the change at once and saves the layout file.
+The picker is the `wallpaper` Herdr mod in `herdr-mod/` next to this file. It changes the layout with `layout.set`, which shows the change at once and saves the layout file.
 
 ## Setting a picture directly
 

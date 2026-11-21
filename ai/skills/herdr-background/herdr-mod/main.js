@@ -1,5 +1,5 @@
-// Background: picks the Herdr background from a folder of pictures, then the panes' opacity.
-// Opened by a key (mod.open:backgrounds) or by the herdr-background Claude skill.
+// Wallpaper: picks the Herdr background from a folder of pictures, then the panes' opacity.
+// Opened by a key (mod.open:wallpaper) or by the herdr-background Claude skill.
 //
 // Step 1, the pictures: moving through them sets each one as the background at once.
 // Step 2, the opacity: left and right change how much of the picture shows behind the
@@ -32,7 +32,7 @@ const THUMB = { w: 320, h: 200 };
 /** One step of the opacity, in percent. */
 const STEP = 5;
 /** Where this mod keeps its folder choice and thumbnails, inside Herdr's folder. */
-const DATA = "data/backgrounds";
+const DATA = "data/wallpaper";
 
 /** @param {string} name */
 const isImage = (name) => IMAGE_TYPES.some((ext) => name.toLowerCase().endsWith(ext));
@@ -112,7 +112,7 @@ function dropPaneBackgrounds(node) {
   Object.values(node).forEach(dropPaneBackgrounds);
 }
 
-export default class Backgrounds extends View {
+export default class Wallpaper extends View {
   init(_props, cx) {
     this.handle = cx.focus_handle();
     this.scroll = ScrollHandle.new();
@@ -150,7 +150,7 @@ export default class Backgrounds extends View {
       try { if (saved) this.folder = JSON.parse(saved).folder || this.folder; } catch { /* keep the default */ }
       await this.load(cx);
     });
-    // `herdr-app do backgrounds.<key>` presses that key: left, right, up, down, enter, b, f.
+    // `herdr-app do wallpaper.<key>` presses that key: left, right, up, down, enter, b, f.
     cx.spawn(async (cx) => {
       for (;;) {
         const c = await nextCommand();
@@ -197,7 +197,7 @@ export default class Backgrounds extends View {
 
   /**
    * Makes a picture's thumbnail once. It is named after the picture's path, so a picture
-   * replaced under the same name keeps its old thumbnail until data/backgrounds/thumbs is emptied.
+   * replaced under the same name keeps its old thumbnail until data/wallpaper/thumbs is emptied.
    * @param {string} name @returns {Promise<string>}
    */
   async thumbnail(name) {
@@ -412,7 +412,7 @@ export default class Backgrounds extends View {
         ? [["left/right", `${STEP}%`], ["shift", "1%"], ["enter", "next: borders"], ["b", "back to pictures"], ["esc", "cancel"]]
         : [["left/right", "pick"], ["enter", "keep"], ["b", "back to opacity"], ["esc", "cancel"]];
     const title = pictures ? "Background" : this.step === "opacity" ? "Pane opacity" : "Borders";
-    return v_flex().id("backgrounds").size_full().p(20).gap(14).bg(t.popover).text_size(13)
+    return v_flex().id("wallpaper").size_full().p(20).gap(14).bg(t.popover).text_size(13)
       .track_focus(this.handle).on_key_down((e, cx) => this.key(e, cx))
       .child(h_flex().flex_none().gap(10).items_center()
         .child(div().text_size(16).font_semibold().text_color(t.foreground).child(title))
