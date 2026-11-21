@@ -58,23 +58,8 @@
     "ctrl-a j": "mod.open:jump",
     "ctrl-a r": "mod.open:run",
     "ctrl-a p": "mod.open:portal",
-    "ctrl-a t": {
-      "command": "pane.split",
-      "args": {
-        "direction": "right",
-        "mod": "tourist"
-      }
-    },
-    "ctrl-shift-s": {
-      "command": "tab.new",
-      "args": {
-        "name": "Practice Range",
-        "mod": "syntax",
-        "props": {
-          "practiceTab": true
-        }
-      }
-    },
+    "ctrl-a t": "mod.open:tourist",
+    "ctrl-a s": "mod.open:syntax",
     "ctrl-shift-q": "overlay.close",
     "ctrl-shift-p": "app.palette",
     "ctrl-,": "app.settings",
@@ -93,9 +78,10 @@
     "ctrl-a ?": "mod.open:keybinds",
     "ctrl-a shift-/": "mod.open:keybinds",
     "ctrl-a g": "mod.open:git-good",
-    "ctrl-a v": "mod.open:vaultr",
-    "ctrl-a d": "mod.open:vim-docs",
-    "ctrl-a l": "mod.open:theme-toggle"
+    "ctrl-a o": "mod.open:vaultr",
+    "ctrl-a v": "mod.open:vim-docs",
+    "ctrl-a l": "mod.open:theme-toggle",
+    "ctrl-a w": "mod.open:backgrounds"
   },
   "terminal": {
     "cmd-c": "terminal.copy",
