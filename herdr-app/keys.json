@@ -49,11 +49,11 @@
     "ctrl-shift-n": {
       "command": "space.new",
       "args": {
-        "folder": "C:\\Users\\codyp"
+        "folder": "{{HOME}}"
       }
     },
     "ctrl-shift-t": "tab.new",
-    "ctrl-a b": "tab.prev",
+    "ctrl-a b": "mod.open:bruno",
     "ctrl-a n": "tab.next",
     "ctrl-a j": "mod.open:jump",
     "ctrl-a r": "mod.open:run",
@@ -86,7 +86,11 @@
     "ctrl-a z": "mod.open:zen",
     "ctrl-a m": "mod.open:spotify",
     "ctrl-shift-i": "mod.open:tickets",
-    "ctrl-shift-y": "mod.open:branch"
+    "ctrl-shift-y": "mod.open:branch",
+    "ctrl-a ?": "mod.open:keybinds",
+    "ctrl-a shift-/": "mod.open:keybinds",
+    "ctrl-a g": "mod.open:git-good",
+    "ctrl-a v": "mod.open:vaultr"
   },
   "terminal": {
     "ctrl-backspace": "send:\u0017",

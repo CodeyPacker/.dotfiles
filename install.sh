@@ -73,6 +73,11 @@ link_path "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
 link_path "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
 link_path "$DOTFILES_ROOT/wezterm" "$HOME/.config/wezterm"
 link_path "$DOTFILES_ROOT/herdr" "$HOME/.config/herdr"
+# Herdr app keybinds are copied, not linked, because the app rewrites the file.
+# The post-merge hook reruns the copy after a git pull.
+# Run "herdr-app/sync-keys.sh push" to save keybinds changed in the app.
+"$DOTFILES_ROOT/herdr-app/sync-keys.sh" pull
+git -C "$DOTFILES_ROOT" config core.hooksPath .githooks
 link_path "$DOTFILES_ROOT/starship/starship.toml" "$HOME/.config/starship.toml"
 link_path "$DOTFILES_ROOT/ai/prompts" "$HOME/.config/ai-prompts"
 link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.claude/CLAUDE.md"

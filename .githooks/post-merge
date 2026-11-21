@@ -1,0 +1,13 @@
+#!/bin/sh
+# After a pull, copy herdr-app/keys.json into the Herdr app if the pull changed it.
+
+root=$(git rev-parse --show-toplevel)
+
+if git diff --quiet ORIG_HEAD HEAD -- herdr-app/keys.json; then
+  exit 0
+fi
+
+case "$(uname -s)" in
+  MINGW* | MSYS*) pwsh -NoProfile -File "$root/herdr-app/sync-keys.ps1" pull ;;
+  *) "$root/herdr-app/sync-keys.sh" pull ;;
+esac

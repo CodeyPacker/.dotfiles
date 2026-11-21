@@ -254,11 +254,15 @@ foreach ($pair in @(@("sharp", "personal\sharp\mod"), @("tutor", "personal\tutor
   }
 }
 # Folders only. Herdr rewrites settings.json, keys.json and hints.json in place, which would
-# replace a file link, so those and mods/islands-workspace-chrome/settings.json are copied
-# over by hand.
+# replace a file link. settings.json, hints.json and mods/islands-workspace-chrome/settings.json
+# are copied over by hand.
 foreach ($dir in @("themes", "layouts", "backgrounds")) {
   Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "herdr-app\$dir") -Target (Join-Path $HOME ".config\herdr-app\$dir")
 }
+# keys.json is copied by sync-keys.ps1. The post-merge hook reruns it after a git pull.
+# Run "herdr-app\sync-keys.ps1 push" to save keybinds changed in the app.
+& (Join-Path $dotfilesRoot "herdr-app\sync-keys.ps1") pull
+& git -C $dotfilesRoot config core.hooksPath .githooks
 # Only the config file. lazygit keeps its state files in the same folder.
 Set-FileSymbolicLink -Source (Join-Path $dotfilesRoot "lazygit\config.yml") -Target (Join-Path $env:LOCALAPPDATA "lazygit\config.yml")
 

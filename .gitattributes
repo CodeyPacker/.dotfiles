@@ -1,0 +1,5 @@
+# Shell scripts that Git runs must keep LF line endings on Windows too.
+.githooks/* text eol=lf
+herdr-app/sync-keys.sh text eol=lf
+# Herdr writes LF. Keeping LF here lets the sync script compare the files exactly.
+herdr-app/keys.json text eol=lf
