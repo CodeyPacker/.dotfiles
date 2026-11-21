@@ -87,7 +87,7 @@ link_mod() {
 }
 
 if [ -d "$HOME/.config/herdr-app" ]; then
-  for mod in branch bruno brunr git-good jump keybinds portal run spotify tickets tourist vaultr zen; do
+  for mod in branch bruno git-good jump keybinds portal run spotify tickets tourist vaultr zen; do
     link_mod "$HOME/personal/herdr-mods/$mod/mods/$mod" "$mod"
   done
   # The islands mods are copied once, not linked: the app keeps a settings file in one of them,
