@@ -33,3 +33,7 @@ herdr-app/themes/win98.json
 # Herdr app layout runtime state and backups.
 herdr-app/layouts/.state/
 herdr-app/layouts/*.bak*
+
+# Herdr writes these into every mod folder for editor completions
+theme/herdr-mod/gpui-kit.d.ts
+theme/herdr-mod/jsconfig.json
