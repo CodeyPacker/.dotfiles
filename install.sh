@@ -88,7 +88,7 @@ link_mod() {
 
 if [ -d "$HOME/.config/herdr-app" ]; then
   for mod in branch bruno git-good jump keybinds portal run spotify tickets tourist zen; do
-    link_mod "$HOME/personal/herdr-mods/$mod/mods/$mod" "$mod"
+    link_mod "$HOME/projects/herdr-mods/$mod/mods/$mod" "$mod"
   done
   link_mod "$HOME/personal/sharp/mod" sharp
   link_mod "$HOME/personal/tutor/mod" tutor

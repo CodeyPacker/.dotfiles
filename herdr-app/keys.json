@@ -49,7 +49,7 @@
     "ctrl-shift-n": {
       "command": "space.new",
       "args": {
-        "folder": "{{HOME}}"
+        "folder": "/Users/cody"
       }
     },
     "ctrl-shift-t": "tab.new",
