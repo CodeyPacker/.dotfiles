@@ -73,6 +73,28 @@ link_path "$DOTFILES_ROOT/nvim" "$HOME/.config/nvim"
 link_path "$DOTFILES_ROOT/tmux/tmux.conf" "$HOME/.tmux.conf"
 link_path "$DOTFILES_ROOT/wezterm" "$HOME/.config/wezterm"
 link_path "$DOTFILES_ROOT/herdr" "$HOME/.config/herdr"
+# Herdr desktop app mods live in their own repos under ~/personal, same as on Windows.
+# A mod is linked only when its repo is cloned. Keep this list in step with install.ps1.
+link_mod() {
+  mod_source=$1
+  mod_name=$2
+
+  if [ -d "$mod_source" ]; then
+    link_path "$mod_source" "$HOME/.config/herdr-app/mods/$mod_name"
+  else
+    echo "Skipping Herdr mod $mod_name, not found: $mod_source"
+  fi
+}
+
+if [ -d "$HOME/.config/herdr-app" ]; then
+  for mod in branch bruno git-good jump keybinds portal run spotify tickets tourist zen; do
+    link_mod "$HOME/personal/herdr-mods/$mod/mods/$mod" "$mod"
+  done
+  link_mod "$HOME/personal/sharp/mod" sharp
+  link_mod "$HOME/personal/tutor/mod" tutor
+else
+  echo "Herdr app config folder not found, skipping mod links: $HOME/.config/herdr-app"
+fi
 # Herdr app keybinds are copied, not linked, because the app rewrites the file.
 # The post-merge hook reruns the copy after a git pull.
 # Run "herdr-app/sync-keys.sh push" to save keybinds changed in the app.

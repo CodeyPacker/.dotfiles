@@ -243,7 +243,7 @@ Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "ai\skills\tech-spec") -T
 Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "mprocs") -Target (Join-Path $env:APPDATA "mprocs")
 # Herdr desktop app mods live in their own repo (personal/herdr-mods). The app hot
 # reloads through the junctions, so edits there show up live.
-foreach ($mod in @("branch", "jump", "portal", "run", "spotify", "tickets", "tourist", "zen")) {
+foreach ($mod in @("branch", "bruno", "git-good", "jump", "keybinds", "portal", "run", "spotify", "tickets", "tourist", "zen")) {
   Set-DirectoryJunction -Source (Join-Path $HOME "personal\herdr-mods\$mod\mods\$mod") -Target (Join-Path $HOME ".config\herdr-app\mods\$mod")
 }
 # Mods kept in their own repos, linked only when that repo is cloned.
