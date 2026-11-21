@@ -81,6 +81,15 @@ for file in "$@"; do
     sed "s|$HOME|{{HOME}}|g" "$source_file" > "$new_file"
   fi
 
+  # Each computer keeps its own light or dark mode (theme/theme.sh), so the repo's copy has none.
+  if [ "$file" = "settings.json" ]; then
+    if [ "$MODE" = "pull" ]; then
+      "$SCRIPT_DIR/../theme/theme.sh" herdr-set "$new_file"
+    else
+      "$SCRIPT_DIR/../theme/theme.sh" herdr-strip "$new_file"
+    fi
+  fi
+
   if [ -f "$target_file" ] && cmp -s "$new_file" "$target_file"; then
     echo "Already matches: $target_file"
     continue

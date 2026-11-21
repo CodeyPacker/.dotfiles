@@ -41,3 +41,23 @@ alias tkill="tmux kill-session -t"
 alias tkillall="tmux kill-server"
 
 alias ll="ls -lAh"
+
+# Light or dark mode on this computer: theme, theme light|dark|toggle
+theme() { "$DOTFILES_ROOT/theme/theme.sh" "$@"; }
+
+# Before each prompt, Starship gets the palette for the saved mode. Its palette is set in the
+# config file, so light mode uses a copy of starship.toml with only the palette line changed.
+_theme_starship() {
+  local mode="" src="$DOTFILES_ROOT/starship/starship.toml" light="$HOME/.cache/starship-light.toml"
+  [[ -r "$HOME/.config/theme-mode" ]] && read -r mode < "$HOME/.config/theme-mode"
+  if [[ "$mode" == light && -r "$src" ]]; then
+    if [[ ! "$light" -nt "$src" ]]; then
+      mkdir -p "${light:h}"
+      sed 's/^palette = "preview"$/palette = "preview_light"/' "$src" > "$light"
+    fi
+    export STARSHIP_CONFIG="$light"
+  else
+    unset STARSHIP_CONFIG
+  fi
+}
+precmd_functions+=(_theme_starship)

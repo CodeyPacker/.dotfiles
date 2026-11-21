@@ -107,6 +107,8 @@ if [ -d "$HOME/.config/herdr-app" ]; then
   done
   link_mod "$HOME/personal/sharp/mod" sharp
   link_mod "$HOME/personal/tutor/mod" tutor
+  # ctrl-a l switches light and dark mode through this mod. It runs theme/theme.sh.
+  link_mod "$DOTFILES_ROOT/theme/herdr-mod" theme-toggle
   # Folders only. Herdr rewrites its settings files in place, which would replace a file link.
   for dir in themes layouts backgrounds; do
     link_path "$DOTFILES_ROOT/herdr-app/$dir" "$HOME/.config/herdr-app/$dir"

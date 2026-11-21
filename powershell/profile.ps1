@@ -49,6 +49,27 @@ function tkillall { tmux kill-server }
 
 function ll { Get-ChildItem -Force @args }
 
+# Light or dark mode on this computer: theme, theme light|dark|toggle
+function theme { & (Join-Path $dotfilesRoot "theme\theme.ps1") @args }
+
+# Before each prompt, Starship gets the palette for the saved mode. Its palette is set in the
+# config file, so light mode uses a copy of starship.toml with only the palette line changed.
+function Invoke-Starship-PreCommand {
+  $modeFile = Join-Path $HOME ".config\theme-mode"
+  $mode = if (Test-Path -LiteralPath $modeFile) { ([IO.File]::ReadAllText($modeFile)).Trim() } else { "" }
+  if ($mode -eq "light" -and (Test-Path -LiteralPath $starshipConfig)) {
+    $light = Join-Path $HOME ".cache\starship-light.toml"
+    if (-not (Test-Path -LiteralPath $light) -or (Get-Item $light).LastWriteTime -lt (Get-Item $starshipConfig).LastWriteTime) {
+      New-Item -ItemType Directory -Force -Path (Split-Path -Parent $light) | Out-Null
+      $text = [IO.File]::ReadAllText($starshipConfig)
+      [IO.File]::WriteAllText($light, [regex]::Replace($text, '(?m)^palette = "preview"$', 'palette = "preview_light"'))
+    }
+    $env:STARSHIP_CONFIG = $light
+  } else {
+    $env:STARSHIP_CONFIG = $starshipConfig
+  }
+}
+
 if (Get-Command starship -ErrorAction SilentlyContinue) {
   Invoke-Expression (&starship init powershell)
 }

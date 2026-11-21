@@ -253,6 +253,8 @@ foreach ($pair in @(@("sharp", "personal\sharp\mod"), @("tutor", "personal\tutor
     Set-DirectoryJunction -Source $modSource -Target (Join-Path $HOME ".config\herdr-app\mods\$($pair[0])")
   }
 }
+# ctrl-a l switches light and dark mode through this mod. It runs theme\theme.ps1.
+Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "theme\herdr-mod") -Target (Join-Path $HOME ".config\herdr-app\mods\theme-toggle")
 # Folders only. Herdr rewrites its settings files in place, which would replace a file link.
 foreach ($dir in @("themes", "layouts", "backgrounds")) {
   Set-DirectoryJunction -Source (Join-Path $dotfilesRoot "herdr-app\$dir") -Target (Join-Path $HOME ".config\herdr-app\$dir")

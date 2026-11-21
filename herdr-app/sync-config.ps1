@@ -74,6 +74,20 @@ foreach ($file in $Files) {
     $newText = $text.Replace($homeInJson, $homeToken)
   }
 
+  # Each computer keeps its own light or dark mode (theme/theme.ps1), so the repo's copy has none.
+  if ($file -eq "settings.json") {
+    $themeScript = Join-Path $PSScriptRoot "..\theme\theme.ps1"
+    $tempFile = [IO.Path]::GetTempFileName()
+    try {
+      [IO.File]::WriteAllText($tempFile, $newText)
+      $helper = if ($Mode -eq "pull") { "herdr-set" } else { "herdr-strip" }
+      & $themeScript $helper $tempFile
+      $newText = [IO.File]::ReadAllText($tempFile)
+    } finally {
+      Remove-Item -LiteralPath $tempFile -Force -ErrorAction SilentlyContinue
+    }
+  }
+
   if ((Test-Path -LiteralPath $target) -and ([IO.File]::ReadAllText($target) -ceq $newText)) {
     Write-Host "Already matches: $target" -ForegroundColor Cyan
     continue

@@ -66,3 +66,20 @@ warning_bg = "#3a2a0e"
 info_bg = "#15264a"
 success = "#45d69a"
 success_bg = "#10301f"
+
+# The same tokens from PReview's light theme. The shell picks this palette in light mode
+# (theme/theme.sh). surface is surface-hover here: surface-raised is white and would vanish.
+[palettes.preview_light]
+ink = "#16141f"
+muted = "#5c5970"
+violet = "#5235d6"
+danger = "#c2252c"
+warning = "#a35406"
+info = "#1f5fd6"
+surface = "#efedf6"
+violet_bg = "#eeeaff"
+danger_bg = "#fdebec"
+warning_bg = "#fef3db"
+info_bg = "#e7effe"
+success = "#0a7a51"
+success_bg = "#e2f6ec"

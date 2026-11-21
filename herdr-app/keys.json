@@ -94,7 +94,8 @@
     "ctrl-a shift-/": "mod.open:keybinds",
     "ctrl-a g": "mod.open:git-good",
     "ctrl-a v": "mod.open:vaultr",
-    "ctrl-a d": "mod.open:vim-docs"
+    "ctrl-a d": "mod.open:vim-docs",
+    "ctrl-a l": "mod.open:theme-toggle"
   },
   "terminal": {
     "cmd-c": "terminal.copy",
