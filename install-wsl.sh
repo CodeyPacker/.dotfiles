@@ -110,6 +110,7 @@ link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.claude/
 link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.codex/AGENTS.md"
 link_path "$DOTFILES_ROOT/ai/skills/tour" "$HOME/.claude/skills/tour"
 link_path "$DOTFILES_ROOT/ai/skills/tech-spec" "$HOME/.claude/skills/tech-spec"
+link_path "$DOTFILES_ROOT/ai/skills/herdr-background" "$HOME/.claude/skills/herdr-background"
 
 echo "Done. Run 'chsh -s $(command -v zsh)' if you want Zsh as your default WSL shell."
 echo "Then open a new WezTerm window."
