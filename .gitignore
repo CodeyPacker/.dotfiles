@@ -37,3 +37,6 @@ herdr-app/layouts/*.bak*
 # Herdr writes these into every mod folder for editor completions
 theme/herdr-mod/gpui-kit.d.ts
 theme/herdr-mod/jsconfig.json
+ai/skills/herdr-background/herdr-mod/gpui-kit.d.ts
+ai/skills/herdr-background/herdr-mod/herdr.d.ts
+ai/skills/herdr-background/herdr-mod/jsconfig.json

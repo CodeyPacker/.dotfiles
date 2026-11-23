@@ -109,6 +109,8 @@ if [ -d "$HOME/.config/herdr-app" ]; then
   link_mod "$HOME/personal/tutor/mod" tutor
   # ctrl-a l switches light and dark mode through this mod. It runs theme/theme.sh.
   link_mod "$DOTFILES_ROOT/theme/herdr-mod" theme-toggle
+  # ctrl-a w picks the background picture and the panes' opacity.
+  link_mod "$DOTFILES_ROOT/ai/skills/herdr-background/herdr-mod" wallpaper
   # Folders only. Herdr rewrites its settings files in place, which would replace a file link.
   for dir in themes layouts backgrounds; do
     link_path "$DOTFILES_ROOT/herdr-app/$dir" "$HOME/.config/herdr-app/$dir"
@@ -127,5 +129,6 @@ link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.claude/
 link_path "$DOTFILES_ROOT/ai/prompts/sr_opus_5_system_prompt.md" "$HOME/.codex/AGENTS.md"
 link_path "$DOTFILES_ROOT/ai/skills/tour" "$HOME/.claude/skills/tour"
 link_path "$DOTFILES_ROOT/ai/skills/tech-spec" "$HOME/.claude/skills/tech-spec"
+link_path "$DOTFILES_ROOT/ai/skills/herdr-background" "$HOME/.claude/skills/herdr-background"
 
 echo "Done. Open a new terminal to load the updated configuration."
